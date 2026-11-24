@@ -9,7 +9,9 @@
     h1 { margin-bottom: 1rem; }
     table { border-collapse: collapse; width: 100%; background: #fff; }
     th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
-    th { background: #333; color: #fff; cursor: pointer; }
+    th { background: #333; color: #fff; cursor: pointer; user-select: none; }
+    th:hover { background: #555; }
+    td.num, th.num { text-align: right; }
     tr:hover td { background: #f0f7ff; }
     img { width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; }
     .online { color: green; font-weight: bold; }
@@ -22,49 +24,81 @@
   <table id="tabelle" hidden>
     <thead>
       <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Rang</th>
-        <th>Power</th>
-        <th>Online</th>
-        <th>Zuletzt online</th>
-        <th>Beigetreten</th>
+        <th data-key=""></th>
+        <th data-key="nick_name">Name</th>
+        <th data-key="rank_code">Rang</th>
+        <th data-key="lv" class="num">Level</th>
+        <th data-key="power" class="num">Power</th>
+        <th data-key="kills" class="num">Kills</th>
+        <th data-key="active" class="num">Aktiv</th>
+        <th data-key="daily_honor" class="num">Honor (täglich)</th>
+        <th data-key="daily_tech" class="num">Tech (täglich)</th>
+        <th data-key="online">Status</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
 
   <script>
-    function fmt(datum) {
-      if (!datum) return "-";
-      const d = new Date(datum);
-      return isNaN(d) ? datum : d.toLocaleString("de-DE");
+    // Basis-URL der API, damit die relativen Avatar-Pfade funktionieren
+    // (anpassen auf die Domain, die auch in deinem Skript als base_url steht, ohne /api-Teil falls vorhanden)
+    const ASSET_BASE = "https://DEINE-API-DOMAIN";
+
+    const num = v => (v ?? 0).toLocaleString("de-DE");
+    let members = [];
+    let sortKey = "power";
+    let sortDir = -1; // -1 = absteigend
+
+    function render() {
+      const body = document.querySelector("#tabelle tbody");
+      body.innerHTML = "";
+
+      const sorted = [...members].sort((a, b) => {
+        const x = a[sortKey], y = b[sortKey];
+        if (typeof x === "string" || typeof y === "string") {
+          return String(x ?? "").localeCompare(String(y ?? ""), "de") * sortDir;
+        }
+        return ((x ?? 0) - (y ?? 0)) * sortDir;
+      });
+
+      for (const m of sorted) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${m.avatar_url ? `<img src="${ASSET_BASE}${m.avatar_url}" alt="" onerror="this.style.display='none'">` : ""}</td>
+          <td>${m.nick_name ?? "-"}</td>
+          <td>${m.rank_label ?? "-"}</td>
+          <td class="num">${num(m.lv)}</td>
+          <td class="num">${num(m.power)}</td>
+          <td class="num">${num(m.kills)}</td>
+          <td class="num">${num(m.active)}</td>
+          <td class="num">${num(m.daily_honor)}</td>
+          <td class="num">${num(m.daily_tech)}</td>
+          <td class="${m.online ? "online" : "offline"}">${m.online ? "online" : "offline"}</td>`;
+        body.appendChild(tr);
+      }
     }
+
+    // Klick auf Spaltenkopf = sortieren
+    document.querySelectorAll("th[data-key]").forEach(th => {
+      th.addEventListener("click", () => {
+        const key = th.dataset.key;
+        if (!key) return;
+        if (sortKey === key) sortDir *= -1;
+        else { sortKey = key; sortDir = -1; }
+        render();
+      });
+    });
 
     fetch("members.json")
       .then(r => {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
       })
-      .then(members => {
-        const body = document.querySelector("#tabelle tbody");
-        members.sort((a, b) => (b.power || 0) - (a.power || 0));
-
-        for (const m of members) {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${m.avatar_url ? `<img src="${m.avatar_url}" alt="">` : ""}</td>
-            <td>${m.nick_name ?? "-"}</td>
-            <td>${m.rank_label ?? "-"}</td>
-            <td>${(m.power ?? 0).toLocaleString("de-DE")}</td>
-            <td class="${m.online ? "online" : "offline"}">${m.online ? "online" : "offline"}</td>
-            <td>${fmt(m.last_online_at)}</td>
-            <td>${fmt(m.joined_at)}</td>`;
-          body.appendChild(tr);
-        }
-
+      .then(data => {
+        members = data;
         document.getElementById("info").textContent = members.length + " Mitglieder";
         document.getElementById("tabelle").hidden = false;
+        render();
       })
       .catch(err => {
         document.getElementById("info").textContent = "Fehler beim Laden: " + err.message;
