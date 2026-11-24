@@ -5,22 +5,86 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Allianz-Mitglieder</title>
   <style>
-    body { font-family: system-ui, sans-serif; margin: 2rem; background: #f5f5f5; }
-    h1 { margin-bottom: 1rem; }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; margin: 1rem; background: #f5f5f5; }
+    h1 { margin: 0 0 0.5rem; font-size: 1.5rem; }
+
+    .toolbar { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+    #sortSelect, #dirBtn { padding: 0.4rem 0.6rem; font-size: 1rem; }
+    #sortbar { display: none; }
+
     table { border-collapse: collapse; width: 100%; background: #fff; }
     th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
-    th { background: #333; color: #fff; cursor: pointer; user-select: none; }
+    th { background: #333; color: #fff; cursor: pointer; user-select: none; white-space: nowrap; }
     th:hover { background: #555; }
     td.num, th.num { text-align: right; }
     tr:hover td { background: #f0f7ff; }
     img { width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; }
     .online { color: green; font-weight: bold; }
     .offline { color: #999; }
+
+    /* ---------- Smartphone-Ansicht ---------- */
+    @media (max-width: 700px) {
+      body { margin: 0.75rem; }
+      #sortbar { display: flex; }
+
+      table, thead, tbody, tr, td { display: block; }
+      thead { display: none; }            /* Spaltenköpfe weg, Sortierung per Dropdown */
+      table { background: transparent; }
+
+      tr {
+        background: #fff;
+        margin-bottom: 0.75rem;
+        padding: 0.6rem 0.75rem;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+        display: grid;
+        grid-template-columns: 40px 1fr auto;
+        gap: 0.15rem 0.6rem;
+        align-items: center;
+      }
+      td { border: 0; padding: 0; }
+      tr:hover td { background: transparent; }
+
+      /* Kopfzeile der Karte: Avatar | Name | Rang */
+      td[data-label="avatar"] { grid-row: 1 / span 2; }
+      td[data-label="name"]   { font-weight: bold; font-size: 1.05rem; }
+      td[data-label="rang"]   { text-align: right; font-weight: bold; }
+      td[data-label="status"] { grid-column: 2 / 4; font-size: 0.85rem; }
+
+      /* Zahlenwerte als Label/Wert-Paare darunter */
+      td.stat {
+        grid-column: 1 / 4;
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        padding: 0.15rem 0;
+        border-top: 1px solid #eee;
+      }
+      td.stat::before { content: attr(data-label); color: #666; }
+    }
   </style>
 </head>
 <body>
   <h1>Allianz-Mitglieder</h1>
   <p id="info">Lade Daten …</p>
+
+  <!-- Sortierung für Smartphone -->
+  <div id="sortbar" class="toolbar">
+    <label for="sortSelect">Sortieren:</label>
+    <select id="sortSelect">
+      <option value="power">Power</option>
+      <option value="nick_name">Name</option>
+      <option value="rank_code">Rang</option>
+      <option value="lv">Level</option>
+      <option value="kills">Kills</option>
+      <option value="active">Aktiv</option>
+      <option value="daily_honor">Honor (täglich)</option>
+      <option value="daily_tech">Tech (täglich)</option>
+    </select>
+    <button id="dirBtn" type="button">↓</button>
+  </div>
+
   <table id="tabelle" hidden>
     <thead>
       <tr>
@@ -40,8 +104,7 @@
   </table>
 
   <script>
-    // Basis-URL der API, damit die relativen Avatar-Pfade funktionieren
-    // (anpassen auf die Domain, die auch in deinem Skript als base_url steht, ohne /api-Teil falls vorhanden)
+    // Domain der API, damit die relativen Avatar-Pfade funktionieren
     const ASSET_BASE = "https://DEINE-API-DOMAIN";
 
     const num = v => (v ?? 0).toLocaleString("de-DE");
@@ -64,29 +127,45 @@
       for (const m of sorted) {
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td>${m.avatar_url ? `<img src="${ASSET_BASE}${m.avatar_url}" alt="" onerror="this.style.display='none'">` : ""}</td>
-          <td>${m.nick_name ?? "-"}</td>
-          <td>${m.rank_label ?? "-"}</td>
-          <td class="num">${num(m.lv)}</td>
-          <td class="num">${num(m.power)}</td>
-          <td class="num">${num(m.kills)}</td>
-          <td class="num">${num(m.active)}</td>
-          <td class="num">${num(m.daily_honor)}</td>
-          <td class="num">${num(m.daily_tech)}</td>
-          <td class="${m.online ? "online" : "offline"}">${m.online ? "online" : "offline"}</td>`;
+          <td data-label="avatar">${m.avatar_url ? `<img src="${ASSET_BASE}${m.avatar_url}" alt="" onerror="this.style.display='none'">` : ""}</td>
+          <td data-label="name">${m.nick_name ?? "-"}</td>
+          <td data-label="rang">${m.rank_label ?? "-"}</td>
+          <td class="num stat" data-label="Level">${num(m.lv)}</td>
+          <td class="num stat" data-label="Power">${num(m.power)}</td>
+          <td class="num stat" data-label="Kills">${num(m.kills)}</td>
+          <td class="num stat" data-label="Aktiv">${num(m.active)}</td>
+          <td class="num stat" data-label="Honor (täglich)">${num(m.daily_honor)}</td>
+          <td class="num stat" data-label="Tech (täglich)">${num(m.daily_tech)}</td>
+          <td data-label="status" class="${m.online ? "online" : "offline"}">${m.online ? "online" : "offline"}</td>`;
         body.appendChild(tr);
       }
+
+      // Dropdown/Button synchron halten
+      document.getElementById("sortSelect").value = sortKey;
+      document.getElementById("dirBtn").textContent = sortDir === -1 ? "↓" : "↑";
     }
 
-    // Klick auf Spaltenkopf = sortieren
+    function setSort(key) {
+      if (!key) return;
+      if (sortKey === key) sortDir *= -1;
+      else { sortKey = key; sortDir = -1; }
+      render();
+    }
+
+    // Desktop: Klick auf Spaltenkopf
     document.querySelectorAll("th[data-key]").forEach(th => {
-      th.addEventListener("click", () => {
-        const key = th.dataset.key;
-        if (!key) return;
-        if (sortKey === key) sortDir *= -1;
-        else { sortKey = key; sortDir = -1; }
-        render();
-      });
+      th.addEventListener("click", () => setSort(th.dataset.key));
+    });
+
+    // Smartphone: Dropdown + Richtungs-Button
+    document.getElementById("sortSelect").addEventListener("change", e => {
+      sortKey = e.target.value;
+      sortDir = -1;
+      render();
+    });
+    document.getElementById("dirBtn").addEventListener("click", () => {
+      sortDir *= -1;
+      render();
     });
 
     fetch("members.json")
