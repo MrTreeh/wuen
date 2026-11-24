@@ -16,7 +16,10 @@ FIELDS = ["uid", "nick_name", "rank_label", "power", "online",
 
 def fetch_members():
     url = f"{BASE_URL}/alliances/{ALLY_ID}"
-    headers = {"Authorization": f"Bearer {API_KEY}"}   # siehe Hinweis unten
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PowerShell/7",
+    }
     r = requests.get(url, headers=headers, timeout=30)
     r.raise_for_status()
     ally = r.json()
