@@ -1,44 +1,28 @@
+import requests
 import json
 import os
-from datetime import date
-from pathlib import Path
 
-import requests
+# 1. Konfiguration
+base_url = os.environ["BASE_URL"]       # anpassen
+ally_id = os.environ["ALLY_ID"]             # anpassen
+token = os.environ["API_KEY"]         # kommt aus dem GitHub Secret
 
-BASE_URL = os.environ["BASE_URL"]      # das, was in PowerShell $baseUrl ist
-ALLY_ID = os.environ["ALLY_ID"]        # $allyId
-API_KEY = os.environ["API_KEY"]
-DATA_FILE = Path("docs/members.json")
+headers = {
+    "Authorization": f"Bearer {token}"
+}
 
-FIELDS = ["uid", "nick_name", "rank_label", "power", "online",
-          "last_online_at", "joined_at", "avatar_url"]
+# 2. API abfragen (hier kommt dein Block hin)
+resp = requests.get(f"{base_url}/alliances/{ally_id}", headers=headers)
+print("Status:", resp.status_code)
+print("Antwort (Anfang):", resp.text[:300])
+resp.raise_for_status()
 
+ally = resp.json()
+members = ally.get("members", [])
+print("Anzahl Members:", len(members))
 
-def fetch_members():
-    url = f"{BASE_URL}/alliances/{ALLY_ID}"
-    headers = {
-        "Authorization": f"Bearer {API_KEY}",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) PowerShell/7",
-    }
-    r = requests.get(url, headers=headers, timeout=30)
-    r.raise_for_status()
-    ally = r.json()
-    return [{k: m.get(k) for k in FIELDS} for m in ally["members"]]
-
-
-def main():
-    members = fetch_members()
-    DATA_FILE.parent.mkdir(exist_ok=True)
-    DATA_FILE.write_text(
-        json.dumps(
-            {"updated": date.today().isoformat(), "members": members},
-            indent=2,
-            ensure_ascii=False,
-        ),
-        encoding="utf-8",
-    )
-    print(f"{len(members)} Mitglieder gespeichert.")
-
-
-if __name__ == "__main__":
-    main
+# 3. Datei schreiben
+os.makedirs("docs", exist_ok=True)
+with open("docs/members.json", "w", encoding="utf-8") as f:
+    json.dump(members, f, ensure_ascii=False, indent=2)
+print("Geschrieben:", len(members), "Members")
