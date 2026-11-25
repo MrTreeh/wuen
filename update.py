@@ -26,6 +26,7 @@ API_URL = os.environ.get(
     "API_URL",
     "https://api.lastasylumtracker.com/v1/alliances/" + os.environ.get("ALLY_ID", ""),
 )
+API_BASE = "https://api.lastasylumtracker.com"
 API_KEY = os.environ["API_KEY"]
 MAX_AGE_SECONDS = 6 * 3600
 
@@ -77,6 +78,13 @@ def driver_info(m):
         "power": m.get("power"),
     }
 
+
+def full_avatar(url):
+    if not url:
+        return ""
+    if url.startswith("http"):
+        return url
+    return API_BASE + url
 
 # ---------------------------------------------------------------- API
 def fetch_members():
@@ -248,6 +256,7 @@ def main():
                 "rank_label": m["rank_label"],
                 "counter": m["counter"],
                 "last_driven": m["last_driven"],
+                "avatar_url": full_avatar(m.get("avatar_url")),
             }
             for m in pool
         ],
