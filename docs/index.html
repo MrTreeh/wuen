@@ -3,125 +3,123 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kutscher-Auswahl</title>
+<title>Kutscher-Board</title>
 <style>
-  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; color: #222; }
-  h1 { font-size: 1.4rem; }
-  .today { background: #eef6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
-  .today .name { font-size: 1.6rem; font-weight: 700; }
-  .today .meta { color: #555; margin-top: .25rem; }
-  .warn { background: #fff4e5; border: 1px solid #f59e0b; padding: .5rem .75rem; border-radius: 8px; margin-top: .75rem; font-size: .9rem; }
-  table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
-  th, td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid #ddd; }
-  th { font-size: .85rem; color: #666; }
-  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-  tr.is-today td { background: #eef6ff; font-weight: 600; }
-  .small { color: #777; font-size: .85rem; }
+  :root {
+    --bg: #0e1116;
+    --panel: #161b22;
+    --panel2: #1c232d;
+    --line: #2a3340;
+    --text: #e6edf3;
+    --muted: #8b98a8;
+    --accent: #e0a030;
+    --ok: #3fb950;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 16px 64px; }
+  .eyebrow { color: var(--accent); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; }
+  h1 { margin: 4px 0 8px; font-size: 2.2rem; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 12px; padding: 20px; margin-bottom: 20px;
+  }
+  .driver { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .driver .name { font-size: 1.9rem; font-weight: 700; }
+  .badge {
+    display: inline-block; padding: 2px 10px; border-radius: 999px;
+    background: var(--panel2); border: 1px solid var(--line);
+    color: var(--accent); font-size: .85rem;
+  }
+  .hint { color: var(--muted); font-size: .9rem; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .tab {
+    background: var(--panel2); border: 1px solid var(--line); color: var(--muted);
+    padding: 6px 14px; border-radius: 8px; cursor: pointer; font: inherit;
+  }
+  .tab.active { color: var(--text); border-color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 500; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
+  tr.first td { color: var(--accent); font-weight: 600; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .hidden { display: none; }
+  footer { color: var(--muted); font-size: .8rem; margin-top: 32px; }
 </style>
 </head>
 <body>
-<h1>Wer fährt heute?</h1>
-<div id="today" class="today">Lade …</div>
+<div class="wrap">
+  <div class="eyebrow">Last Asylum</div>
+  <h1>Kutscher-Board</h1>
+  <p class="sub">Auswahlhilfe für die tägliche Kutscher-Ernennung (im Spiel zwischen 11:30 und 12:30).</p>
 
-<h2>Voraussichtlich die nächsten 6 Tage</h2>
-<table id="preview">
-  <thead><tr><th>Tag</th><th>Name</th><th>Rang</th><th class="num">Power</th></tr></thead>
-  <tbody></tbody>
-</table>
+  <div class="card driver">
+    <div>
+      <div class="hint" id="date">Lade…</div>
+      <div class="name" id="driver-name">–</div>
+      <span class="badge" id="driver-rank"></span>
+    </div>
+    <div class="hint" id="ranks"></div>
+  </div>
 
-<h2>Statistik</h2>
-<table id="stats">
-  <thead><tr><th>Name</th><th>Rang</th><th class="num">Fahrten</th><th>Zuletzt</th></tr></thead>
-  <tbody></tbody>
-</table>
+  <div class="tabs">
+    <button class="tab active" data-tab="cand">Kandidaten</button>
+    <button class="tab" data-tab="prev">Vorschau</button>
+  </div>
 
-<p class="small" id="updated"></p>
+  <div class="card" id="cand">
+    <table>
+      <thead><tr><th>#</th><th>Name</th><th>Rang</th><th class="num">Counter</th><th>Zuletzt</th></tr></thead>
+      <tbody id="cand-body"></tbody>
+    </table>
+  </div>
+
+  <div class="card hidden" id="prev">
+    <table>
+      <thead><tr><th>Datum</th><th>Tag</th><th>Ränge</th><th>Fahrer</th></tr></thead>
+      <tbody id="prev-body"></tbody>
+    </table>
+  </div>
+
+  <footer id="updated"></footer>
+</div>
 
 <script>
-const WD_DE = {
-  Monday: "Montag", Tuesday: "Dienstag", Wednesday: "Mittwoch",
-  Thursday: "Donnerstag", Friday: "Freitag", Saturday: "Samstag", Sunday: "Sonntag"
-};
-
-function esc(s) {
-  return String(s ?? "")
-    .split("\u0026").join("\u0026amp;")
-    .split("\u003c").join("\u0026lt;")
-    .split("\u003e").join("\u0026gt;")
-    .split("\u0022").join("\u0026quot;")
-    .split("\u0027").join("\u0026#39;");
-}
-
-function fmtDate(iso) {
-  if (!iso) return "noch nie";
-  const [y, m, d] = iso.split("-");
-  return `${d}.${m}.${y}`;
-}
-
-function fmtPower(p) {
-  return (p === undefined || p === null || p === "") ? "–" : Number(p).toLocaleString("de-DE");
-}
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&","<":"<",">":">",'"':"""}[c]));
 
 fetch("data.json?_=" + Date.now())
   .then(r => r.json())
   .then(d => {
-    const dr = d.driver;
+    document.getElementById("date").textContent = d.weekday + ", " + d.date;
+    document.getElementById("driver-name").textContent = d.driver.nick_name;
+    document.getElementById("driver-rank").textContent = d.driver.rank_label;
+    document.getElementById("ranks").textContent = "Erlaubte Ränge: R" + d.allowed_ranks.join(", R");
 
-    // Heutiger Kutscher
-    let html = "";
-    if (dr) {
-      html += `<div class="name">${esc(dr.nick_name)}</div>`;
-      html += `<div class="meta">${esc(dr.rank_label)} · ${WD_DE[d.weekday] || esc(d.weekday)}, ${fmtDate(d.date)}</div>`;
-      html += `<div class="meta">Fahrberechtigt heute: ${(d.allowed_ranks || []).map(r => "R" + r).join(", ")}</div>`;
-    } else {
-      html = "Kein Kutscher gefunden.";
-    }
-    if (d.fallback) {
-      html += `<div class="warn">${esc(d.fallback)}</div>`;
-    }
-    document.getElementById("today").innerHTML = html;
+    document.getElementById("cand-body").innerHTML = d.candidates.map((m, i) =>
+      `<tr class="${i === 0 ? "first" : ""}">
+         <td>${i + 1}</td><td>${esc(m.nick_name)}</td><td>${esc(m.rank_label)}</td>
+         <td class="num">${m.counter}</td><td>${esc(m.last_driven || "–")}</td>
+       </tr>`).join("");
 
-    // Vorschau
-    const pb = document.querySelector("#preview tbody");
-    pb.innerHTML = "";
-    (d.preview || []).forEach(p => {
-      const m = p.driver;
-      pb.insertAdjacentHTML("beforeend",
-        `<tr>
-          <td>${WD_DE[p.weekday] || esc(p.weekday)}, ${fmtDate(p.date)}</td>
-          <td>${m ? esc(m.nick_name) : "–"}</td>
-          <td>${m ? esc(m.rank_label) : ""}</td>
-          <td class="num">${m ? fmtPower(m.power) : ""}</td>
-        </tr>`);
-    });
+    document.getElementById("prev-body").innerHTML = d.preview.map(p =>
+      `<tr><td>${esc(p.date)}</td><td>${esc(p.weekday)}</td>
+       <td>R${p.allowed_ranks.join(", R")}</td>
+       <td>${p.driver ? esc(p.driver.nick_name) : "–"}</td></tr>`).join("");
 
-    // Statistik: niedrigster Counter zuerst, dann am längsten nicht gefahren
-    const sorted = [...(d.candidates || [])].sort((a, b) =>
-      a.counter - b.counter ||
-      (a.last_driven || "").localeCompare(b.last_driven || "") ||
-      a.nick_name.localeCompare(b.nick_name)
-    );
-
-    const sb = document.querySelector("#stats tbody");
-    sb.innerHTML = "";
-    sorted.forEach(s => {
-      const isToday = dr && s.uid === dr.uid;
-      sb.insertAdjacentHTML("beforeend",
-        `<tr${isToday ? ' class="is-today"' : ""}>
-          <td>${esc(s.nick_name)}</td>
-          <td>${esc(s.rank_label)}</td>
-          <td class="num">${s.counter}</td>
-          <td>${fmtDate(s.last_driven)}</td>
-        </tr>`);
-    });
-
-    document.getElementById("updated").textContent =
-      "Stand: " + String(d.updated_at || "").replace("T", " ").slice(0, 16);
+    document.getElementById("updated").textContent = "Stand: " + d.updated_at;
   })
-  .catch(err => {
-    console.error("Ladefehler:", err);
-    document.getElementById("today").textContent = "data.json konnte nicht geladen werden.";
-  });
+  .catch(() => { document.getElementById("date").textContent = "Daten konnten nicht geladen werden."; });
+
+document.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === btn));
+  document.getElementById("cand").classList.toggle("hidden", btn.dataset.tab !== "cand");
+  document.getElementById("prev").classList.toggle("hidden", btn.dataset.tab !== "prev");
+}));
 </script>
 </body>
 </html>
