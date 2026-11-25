@@ -5,14 +5,16 @@ Taeglicher Kutscher-Update:
   (neue hinzufuegen, ausgetretene entfernen, Counter bleibt erhalten)
 - Kandidaten fuer heute bestimmen (Di/Sa: R4+R5, sonst: R3)
 - Niedrigster Counter zuerst, Erstplatzierter bekommt +1
+- Vorschau der naechsten 6 Tage simulieren (ohne echte Counter zu aendern)
 - data.json fuer die Website schreiben
 """
 
+import copy
 import json
 import os
 import re
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
 import requests
@@ -28,6 +30,8 @@ MAX_AGE_SECONDS = 6 * 3600
 MEMBERS_FILE = "docs/members.json"
 DATA_FILE = "docs/data.json"
 TZ = ZoneInfo("Europe/Berlin")
+
+PREVIEW_DAYS = 6
 
 # Wochentage: Monday=0 ... Sunday=6
 HIGH_RANK_DAYS = {1, 5}          # Dienstag, Samstag -> R4+R5
@@ -56,6 +60,19 @@ def save_json(path, obj):
     os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
+
+
+def allowed_ranks_for(day):
+    return HIGH_RANKS if day.weekday() in HIGH_RANK_DAYS else NORMAL_RANKS
+
+
+def driver_info(m):
+    return {
+        "uid": m["uid"],
+        "nick_name": m["nick_name"],
+        "rank_label": m["rank_label"],
+        "power": m.get("power"),
+    }
 
 
 # ---------------------------------------------------------------- API
@@ -127,10 +144,10 @@ def sync_members(state, api_members):
 
 
 # ---------------------------------------------------------------- Auswahl
-def candidates_for(state, today):
+def candidates_for(state, day):
     """Kandidaten fuer den Tag, sortiert: niedrigster Counter zuerst,
     bei Gleichstand wer am laengsten nicht gefahren ist, dann Name."""
-    allowed = HIGH_RANKS if today.weekday() in HIGH_RANK_DAYS else NORMAL_RANKS
+    allowed = allowed_ranks_for(day)
     pool = [m for m in state if m["rank"] in allowed]
     pool.sort(key=lambda m: (
         m["counter"],
@@ -138,6 +155,30 @@ def candidates_for(state, today):
         m["nick_name"].lower(),
     ))
     return pool
+
+
+def build_preview(state, today, days=PREVIEW_DAYS):
+    """Simuliert die naechsten `days` Tage auf einer Kopie des Zustands.
+    Die echten Counter bleiben unveraendert."""
+    sim = copy.deepcopy(state)
+    preview = []
+    for i in range(1, days + 1):
+        day = today + timedelta(days=i)
+        pool = candidates_for(sim, day)
+        entry = {
+            "date": day.isoformat(),
+            "weekday": day.strftime("%A"),
+            "allowed_ranks": sorted(allowed_ranks_for(day)),
+            "driver": None,
+        }
+        if pool:
+            pick = pool[0]
+            entry["driver"] = driver_info(pick)
+            # nur in der Simulation
+            pick["counter"] += 1
+            pick["last_driven"] = day.isoformat()
+        preview.append(entry)
+    return preview
 
 
 # ---------------------------------------------------------------- Main
@@ -161,34 +202,38 @@ def main():
     api_members = fetch_members()
     state = sync_members(state, api_members)
 
-    pool = candidates_for(state, today)
-    if not pool:
-        raise RuntimeError("Keine Kandidaten fuer heute gefunden")
-
-    top = pool[0]
-    if not already_done:
+    if already_done:
+        # Wer heute schon gefahren ist, bleibt der Fahrer (Counter wurde bereits erhoeht)
+        print("Fuer heute bereits gelaufen - Counter bleibt unveraendert",
+              file=sys.stderr)
+        todays = [m for m in state
+                  if m["last_driven"] == today_str
+                  and m["rank"] in allowed_ranks_for(today)]
+        pool = candidates_for(state, today)
+        if not pool:
+            raise RuntimeError("Keine Kandidaten fuer heute gefunden")
+        top = todays[0] if todays else pool[0]
+    else:
+        pool = candidates_for(state, today)
+        if not pool:
+            raise RuntimeError("Keine Kandidaten fuer heute gefunden")
+        top = pool[0]
         for m in state:
             if m["uid"] == top["uid"]:
                 m["counter"] += 1
                 m["last_driven"] = today_str
         # Pool nach dem +1 neu sortieren, damit die Anzeige stimmt
         pool = candidates_for(state, today)
-    else:
-        print("Fuer heute bereits gelaufen - Counter bleibt unveraendert",
-              file=sys.stderr)
+
+    # Vorschau auf Basis des Zustands NACH der heutigen Auswahl
+    preview = build_preview(state, today)
 
     data = {
         "date": today_str,
         "weekday": today.strftime("%A"),
         "updated_at": now.isoformat(timespec="seconds"),
-        "allowed_ranks": sorted(
-            HIGH_RANKS if today.weekday() in HIGH_RANK_DAYS else NORMAL_RANKS
-        ),
-        "driver": {
-            "uid": top["uid"],
-            "nick_name": top["nick_name"],
-            "rank_label": top["rank_label"],
-        },
+        "allowed_ranks": sorted(allowed_ranks_for(today)),
+        "driver": driver_info(top),
         "candidates": [
             {
                 "uid": m["uid"],
@@ -199,6 +244,7 @@ def main():
             }
             for m in pool
         ],
+        "preview": preview,
     }
 
     save_json(MEMBERS_FILE, state)
