@@ -63,7 +63,7 @@ fetch("data.json?_=" + Date.now())
   .catch(err => {
     console.error("Ladefehler:", err);
     document.getElementById("today").textContent = "data.json konnte nicht geladen werden.";
-  }
+  });
 </script>
 </body>
 </html>
