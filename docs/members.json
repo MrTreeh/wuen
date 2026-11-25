@@ -5,6 +5,7 @@
     "rank": 4,
     "rank_label": "R4 · Overseer",
     "power": 51017075,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -14,6 +15,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 46103461,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -23,6 +25,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 44408546,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -32,6 +35,7 @@
     "rank": 4,
     "rank_label": "R4",
     "power": 44120719,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -41,6 +45,7 @@
     "rank": 4,
     "rank_label": "R4",
     "power": 37444874,
+    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272938926352_1793485228782.jpg",
     "counter": 0,
     "last_driven": null
   },
@@ -50,6 +55,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 36167096,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -59,8 +65,9 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 34576177,
-    "counter": 0,
-    "last_driven": null
+    "avatar_url": "/static/avatars/head_90001.png",
+    "counter": 1,
+    "last_driven": "2026-11-25"
   },
   {
     "uid": "272952475920",
@@ -68,6 +75,7 @@
     "rank": 4,
     "rank_label": "R4",
     "power": 33894042,
+    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272952475920_1795545672003.jpg",
     "counter": 0,
     "last_driven": null
   },
@@ -77,6 +85,7 @@
     "rank": 5,
     "rank_label": "R5",
     "power": 32592802,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -86,6 +95,7 @@
     "rank": 4,
     "rank_label": "R4 · Militarist",
     "power": 32560159,
+    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_273274650896_1795556717591.jpg",
     "counter": 0,
     "last_driven": null
   },
@@ -95,6 +105,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 28652654,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -104,6 +115,7 @@
     "rank": 4,
     "rank_label": "R4 · Diplomat",
     "power": 27656228,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -113,6 +125,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 27206840,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -122,6 +135,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 22365323,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -131,6 +145,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 19448330,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 1,
     "last_driven": "2026-11-25"
   },
@@ -140,6 +155,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 19188085,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -149,6 +165,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 19167337,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -158,6 +175,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 18865754,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -167,6 +185,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 18407354,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -176,6 +195,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 16582295,
+    "avatar_url": "https://phs-image.globallap.com/ASTC6_273365188880_1783719337138.jpg",
     "counter": 0,
     "last_driven": null
   },
@@ -185,6 +205,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 16154067,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -194,6 +215,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 15207927,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -203,6 +225,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 14903643,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -212,6 +235,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 13455579,
+    "avatar_url": "https://phs-image.globallap.com/ASTC6_273706606864_1783892574976.jpg",
     "counter": 0,
     "last_driven": null
   },
@@ -221,6 +245,7 @@
     "rank": 3,
     "rank_label": "R3",
     "power": 13176871,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -230,6 +255,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 11766322,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -239,6 +265,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 9642017,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -248,6 +275,7 @@
     "rank": 2,
     "rank_label": "R2",
     "power": 8618774,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -257,6 +285,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 3809528,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -266,6 +295,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 2814280,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -275,6 +305,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 1902942,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -284,6 +315,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 1877356,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -293,6 +325,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 1816636,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -302,6 +335,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 1650765,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -311,6 +345,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 1607997,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -320,6 +355,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 1495743,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -329,6 +365,7 @@
     "rank": 2,
     "rank_label": "R2",
     "power": 1446796,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -338,6 +375,7 @@
     "rank": 2,
     "rank_label": "R2",
     "power": 1434156,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -347,6 +385,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 1381406,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -356,6 +395,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 1286637,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -365,6 +405,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 1048259,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -374,6 +415,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 987625,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -383,6 +425,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 957648,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -392,6 +435,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 931494,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -401,6 +445,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 823111,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -410,6 +455,7 @@
     "rank": 2,
     "rank_label": "R2",
     "power": 792806,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -419,6 +465,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 746909,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -428,6 +475,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 682182,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -437,6 +485,7 @@
     "rank": 2,
     "rank_label": "R2",
     "power": 641128,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -446,6 +495,7 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 638273,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -455,6 +505,7 @@
     "rank": 0,
     "rank_label": "",
     "power": 579653,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -464,6 +515,7 @@
     "rank": 2,
     "rank_label": "R2",
     "power": 354315,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   }
