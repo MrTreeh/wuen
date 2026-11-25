@@ -20,7 +20,7 @@ import requests
 # ---------------------------------------------------------------- Konfig
 API_URL = os.environ.get(
     "API_URL",
-    "https://api.lastasylumtracker.com/v1/alliances/" + os.environ.get("ALLIANCE_ID", ""),
+    "https://api.lastasylumtracker.com/v1/alliances/" + os.environ.get("ALLY_ID", ""),
 )
 API_KEY = os.environ["API_KEY"]
 MAX_AGE_SECONDS = 6 * 3600
