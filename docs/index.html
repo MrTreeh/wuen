@@ -13,7 +13,6 @@
     --text: #e6edf3;
     --muted: #8b98a8;
     --accent: #e0a030;
-    --ok: #3fb950;
   }
   * { box-sizing: border-box; }
   body {
@@ -39,32 +38,33 @@
   .hint { color: var(--muted); font-size: .9rem; }
   .tabs { display: flex; gap: 8px; margin-bottom: 12px; }
   .tab {
-    background: var(--panel2); border: 1px solid var(--line); color: var(--muted);
-    padding: 6px 14px; border-radius: 8px; cursor: pointer; font: inherit;
+    background: var(--panel2); color: var(--muted); border: 1px solid var(--line);
+    border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: .95rem;
   }
   .tab.active { color: var(--text); border-color: var(--accent); }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); }
-  th { color: var(--muted); font-weight: 500; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; }
-  tr.first td { color: var(--accent); font-weight: 600; }
-  .num { text-align: right; font-variant-numeric: tabular-nums; }
   .hidden { display: none; }
-  footer { color: var(--muted); font-size: .8rem; margin-top: 32px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 500; font-size: .85rem; text-transform: uppercase; letter-spacing: .06em; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.first td { color: var(--accent); font-weight: 600; }
+  footer { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 24px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="eyebrow">Last Asylum</div>
-  <h1>Kutscher-Board</h1>
-  <p class="sub">Auswahlhilfe für die tägliche Kutscher-Ernennung (im Spiel zwischen 11:30 und 12:30).</p>
+  <div class="eyebrow">Kutscher-Board</div>
+  <h1>Heutiger Fahrer</h1>
+  <p class="sub" id="date">Lade ...</p>
 
-  <div class="card driver">
-    <div>
-      <div class="hint" id="date">Lade…</div>
-      <div class="name" id="driver-name">–</div>
-      <span class="badge" id="driver-rank"></span>
+  <div class="card">
+    <div class="driver">
+      <div>
+        <div class="name" id="driver-name">–</div>
+        <span class="badge" id="driver-rank">–</span>
+      </div>
+      <div class="hint" id="ranks"></div>
     </div>
-    <div class="hint" id="ranks"></div>
   </div>
 
   <div class="tabs">
@@ -74,7 +74,7 @@
 
   <div class="card" id="cand">
     <table>
-      <thead><tr><th>#</th><th>Name</th><th>Rang</th><th class="num">Counter</th><th>Zuletzt</th></tr></thead>
+      <thead><tr><th>#</th><th>Name</th><th>Rang</th><th class="num">Counter</th><th>Zuletzt gefahren</th></tr></thead>
       <tbody id="cand-body"></tbody>
     </table>
   </div>
@@ -93,7 +93,10 @@
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&","<":"<",">":">",'"':"""}[c]));
 
 fetch("data.json?_=" + Date.now())
-  .then(r => r.json())
+  .then(r => {
+    if (!r.ok) throw new Error("data.json: HTTP " + r.status);
+    return r.json();
+  })
   .then(d => {
     document.getElementById("date").textContent = d.weekday + ", " + d.date;
     document.getElementById("driver-name").textContent = d.driver.nick_name;
@@ -115,8 +118,13 @@ fetch("data.json?_=" + Date.now())
   })
   .catch(err => {
     console.error(err);
-    document.getElementById("date").textContent =
-      "Fehler: " + err.message;
+    document.getElementById("date").textContent = "Fehler: " + err.message;
+  });
+
+document.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === btn));
+  document.getElementById("cand").classList.toggle("hidden", btn.dataset.tab !== "cand");
+  document.getElementById("prev").classList.toggle("hidden", btn.dataset.tab !== "prev");
 }));
 </script>
 </body>
