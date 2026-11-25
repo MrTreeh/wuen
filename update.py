@@ -1,32 +1,63 @@
 #!/usr/bin/env python3
-"""Kutscher-Auswahl: liest Allianz-Mitglieder, bestimmt den Fahrer des Tages
-und schreibt members.json + data.json fuer die Webseite."""
+"""
+Taeglicher Kutscher-Update:
+- Mitglieder per API einlesen, members.json abgleichen
+  (neue hinzufuegen, ausgetretene entfernen, Counter bleibt erhalten)
+- Kandidaten fuer heute bestimmen (Di/Sa: R4+R5, sonst: R3)
+- Niedrigster Counter zuerst, Erstplatzierter bekommt +1
+- data.json fuer die Website schreiben
+"""
 
 import json
 import os
+import re
 import sys
-from datetime import date, datetime, timedelta
-from pathlib import Path
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 import requests
 
+# ---------------------------------------------------------------- Konfig
+API_URL = os.environ.get(
+    "API_URL",
+    "https://api.lastasylumtracker.com/v1/alliances/" + os.environ.get("ALLIANCE_ID", ""),
+)
 API_KEY = os.environ["API_KEY"]
-ALLY_ID = os.environ["ALLY_ID"]
-API_URL = f"https://api.lastasylumtracker.com/v1/alliances/{ALLY_ID}"
+MAX_AGE_SECONDS = 6 * 3600
 
-MEMBERS_FILE = Path("members.json")
-DATA_FILE = Path("data.json")
+MEMBERS_FILE = "members.json"
+DATA_FILE = "data.json"
+TZ = ZoneInfo("Europe/Berlin")
 
-MIN_ACTIVE = 1            # active >= MIN_ACTIVE gilt als aktiv
-PREVIEW_DAYS = 6
-MAX_AGE_SECONDS = 3600    # aeltere Daten -> Warnung
-
-# Wochentag (Mo=0 ... So=6): Dienstag (1) und Samstag (5) = Rang 4/5
-HIGH_RANK_DAYS = {1, 5}
+# Wochentage: Monday=0 ... Sunday=6
+HIGH_RANK_DAYS = {1, 5}          # Dienstag, Samstag -> R4+R5
 HIGH_RANKS = {4, 5}
-LOW_RANKS = {3}
+NORMAL_RANKS = {3}               # alle anderen Tage -> R3
 
 
+# ---------------------------------------------------------------- Helfer
+def parse_rank(m):
+    """Liest den Rang als Zahl aus rank_label ('R3', 'R4 · Overseer', ...)."""
+    label = m.get("rank_label") or m.get("rank") or ""
+    match = re.match(r"\s*R?(\d)", str(label))
+    return int(match.group(1)) if match else 0
+
+
+def load_state():
+    """members.json laden. Fehlt die Datei, wird mit leerer Liste gestartet."""
+    if not os.path.exists(MEMBERS_FILE):
+        return []
+    with open(MEMBERS_FILE, encoding="utf-8") as f:
+        content = f.read().strip()
+        return json.loads(content) if content else []
+
+
+def save_json(path, obj):
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=2)
+
+
+# ---------------------------------------------------------------- API
 def fetch_members():
     resp = requests.get(
         API_URL,
@@ -41,140 +72,137 @@ def fetch_members():
     resp.raise_for_status()
     payload = resp.json()
 
+    print("Top-Level-Keys:", list(payload.keys()), file=sys.stderr)
+
     age = payload.get("age_seconds")
     if age is not None and age > MAX_AGE_SECONDS:
         print(f"WARNUNG: Daten sind {age}s alt (cached={payload.get('cached')})",
               file=sys.stderr)
 
-    # Mitgliederliste: je nach Antwortformat in "members" oder direkt
     members = payload.get("members")
     if members is None and isinstance(payload.get("data"), dict):
         members = payload["data"].get("members")
     if members is None:
         raise RuntimeError("Keine Mitgliederliste in der API-Antwort gefunden")
+
+    print(f"Anzahl Mitglieder: {len(members)}", file=sys.stderr)
+    if members:
+        print("Beispiel-Mitglied:", json.dumps(members[0], ensure_ascii=False),
+              file=sys.stderr)
     return members
 
 
-def load_state():
-    if MEMBERS_FILE.exists():
-        return json.loads(MEMBERS_FILE.read_text(encoding="utf-8"))
-    return {}
+# ---------------------------------------------------------------- Sync
+def sync_members(state, api_members):
+    """
+    Gleicht members.json mit der API ab:
+    - bestehende Mitglieder: Name/Rang aktualisieren, Counter behalten
+    - neue Mitglieder: mit Counter 0 hinzufuegen
+    - nicht mehr vorhandene: entfernen
+    """
+    old = {str(m["uid"]): m for m in state}
+    new_state = []
 
-
-def sync_members(api_members, state, today):
-    """Gleicht members.json mit der API ab: neue hinzufuegen, ausgetretene
-    entfernen, Name/Rang/Power/active aktualisieren."""
-    new_state = {}
     for m in api_members:
-        uid = str(m.get("uid") or m.get("id"))
-        name = m.get("name") or m.get("nick_name") or uid
-        old = state.get(uid, {})
-        new_state[uid] = {
+        uid = str(m.get("uid"))
+        if not uid or uid == "None":
+            continue
+        prev = old.get(uid, {})
+        new_state.append({
             "uid": uid,
-            "name": name,
-            "rank": int(m.get("rank", 0)),
-            "power": m.get("power", 0),
-            "active": m.get("active", 0) or 0,
-            # Neue Mitglieder: heutiges Datum -> hinten einsortiert
-            "last_driven": old.get("last_driven", today.isoformat()),
-            "counter": old.get("counter", 0),
-        }
+            "nick_name": m.get("nick_name", prev.get("nick_name", "?")),
+            "rank": parse_rank(m),
+            "rank_label": m.get("rank_label", ""),
+            "power": m.get("power", prev.get("power", 0)),
+            "counter": prev.get("counter", 0),
+            "last_driven": prev.get("last_driven"),
+        })
+
+    removed = set(old) - {m["uid"] for m in new_state}
+    added = {m["uid"] for m in new_state} - set(old)
+    print(f"Sync: {len(added)} neu, {len(removed)} entfernt, "
+          f"{len(new_state)} gesamt", file=sys.stderr)
     return new_state
 
 
-def eligible_ranks(day):
-    return HIGH_RANKS if day.weekday() in HIGH_RANK_DAYS else LOW_RANKS
+# ---------------------------------------------------------------- Auswahl
+def candidates_for(state, today):
+    """Kandidaten fuer den Tag, sortiert: niedrigster Counter zuerst,
+    bei Gleichstand wer am laengsten nicht gefahren ist, dann Name."""
+    allowed = HIGH_RANKS if today.weekday() in HIGH_RANK_DAYS else NORMAL_RANKS
+    pool = [m for m in state if m["rank"] in allowed]
+    pool.sort(key=lambda m: (
+        m["counter"],
+        m["last_driven"] or "",      # None/leer = noch nie gefahren -> zuerst
+        m["nick_name"].lower(),
+    ))
+    return pool
 
 
-def candidates(state, day, drove_on=None):
-    """Sortierte Kandidatenliste fuer einen Tag.
-    drove_on: dict uid -> datum, fuer die Vorschau (simulierte Fahrten)."""
-    ranks = eligible_ranks(day)
-    pool = [m for m in state.values() if m["rank"] in ranks]
-    active_pool = [m for m in pool if m["active"] >= MIN_ACTIVE]
-
-    fallback = False
-    if not active_pool:
-        active_pool = pool
-        fallback = True
-
-    def key(m):
-        last = (drove_on or {}).get(m["uid"], m["last_driven"])
-        return (last, m["uid"])
-
-    return sorted(active_pool, key=key), fallback
-
-
-def build_preview(state, start_day):
-    """Naechste PREVIEW_DAYS Fahrer, ohne Counter/last_driven zu veraendern."""
-    simulated = {}
-    preview = []
-    for i in range(1, PREVIEW_DAYS + 1):
-        day = start_day + timedelta(days=i)
-        cands, fallback = candidates(state, day, simulated)
-        if not cands:
-            continue
-        pick = cands[0]
-        simulated[pick["uid"]] = day.isoformat()
-        preview.append({
-            "date": day.isoformat(),
-            "weekday": day.weekday(),
-            "uid": pick["uid"],
-            "name": pick["name"],
-            "rank": pick["rank"],
-            "power": pick["power"],
-            "fallback": fallback,
-        })
-    return preview
-
-
+# ---------------------------------------------------------------- Main
 def main():
-    today = date.today()
-    state = load_state()
-    api_members = fetch_members()
-    state = sync_members(api_members, state, today)
+    now = datetime.now(TZ)
+    today = now.date()
+    today_str = today.isoformat()
 
-    cands, fallback = candidates(state, today)
-    if not cands:
+    state = load_state()
+
+    # Idempotenz: lief fuer heute schon ein Auswahl-Lauf, Counter nicht nochmal erhoehen
+    already_done = False
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, encoding="utf-8") as f:
+                last = json.load(f)
+            already_done = last.get("date") == today_str
+        except (json.JSONDecodeError, OSError):
+            pass
+
+    api_members = fetch_members()
+    state = sync_members(state, api_members)
+
+    pool = candidates_for(state, today)
+    if not pool:
         raise RuntimeError("Keine Kandidaten fuer heute gefunden")
 
-    driver = cands[0]
-    # Nur einmal pro Tag buchen (Mehrfachlaeufe am selben Tag)
-    already = DATA_FILE.exists() and \
-        json.loads(DATA_FILE.read_text(encoding="utf-8")).get("date") == today.isoformat()
-    if already:
-        prev = json.loads(DATA_FILE.read_text(encoding="utf-8"))
-        driver = state.get(prev["today"]["uid"], driver)
+    top = pool[0]
+    if not already_done:
+        for m in state:
+            if m["uid"] == top["uid"]:
+                m["counter"] += 1
+                m["last_driven"] = today_str
+        # Pool nach dem +1 neu sortieren, damit die Anzeige stimmt
+        pool = candidates_for(state, today)
     else:
-        state[driver["uid"]]["last_driven"] = today.isoformat()
-        state[driver["uid"]]["counter"] += 1
-
-    # Vorschau nach der Buchung berechnen
-    preview = build_preview(state, today)
-
-    MEMBERS_FILE.write_text(
-        json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
+        print("Fuer heute bereits gelaufen - Counter bleibt unveraendert",
+              file=sys.stderr)
 
     data = {
-        "date": today.isoformat(),
-        "generated_at": datetime.now().isoformat(timespec="seconds"),
-        "today": {
-            "uid": driver["uid"],
-            "name": driver["name"],
-            "rank": driver["rank"],
-            "power": driver["power"],
-            "fallback": fallback,
-        },
-        "preview": preview,
-        "stats": sorted(
-            ({"name": m["name"], "rank": m["rank"], "counter": m["counter"],
-              "last_driven": m["last_driven"]} for m in state.values()),
-            key=lambda x: (-x["counter"], x["name"]),
+        "date": today_str,
+        "weekday": today.strftime("%A"),
+        "updated_at": now.isoformat(timespec="seconds"),
+        "allowed_ranks": sorted(
+            HIGH_RANKS if today.weekday() in HIGH_RANK_DAYS else NORMAL_RANKS
         ),
+        "driver": {
+            "uid": top["uid"],
+            "nick_name": top["nick_name"],
+            "rank_label": top["rank_label"],
+        },
+        "candidates": [
+            {
+                "uid": m["uid"],
+                "nick_name": m["nick_name"],
+                "rank_label": m["rank_label"],
+                "counter": m["counter"],
+                "last_driven": m["last_driven"],
+            }
+            for m in pool
+        ],
     }
-    DATA_FILE.write_text(
-        json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Kutscher heute: {driver['name']} (R{driver['rank']})")
+
+    save_json(MEMBERS_FILE, state)
+    save_json(DATA_FILE, data)
+    print(f"Kutscher heute: {top['nick_name']} ({top['rank_label']})")
 
 
 if __name__ == "__main__":
