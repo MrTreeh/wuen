@@ -70,6 +70,14 @@ def allowed_ranks_for(day):
     return HIGH_RANKS if day.weekday() in HIGH_RANK_DAYS else NORMAL_RANKS
 
 
+def full_avatar(url):
+    if not url:
+        return ""
+    if url.startswith("http"):
+        return url
+    return API_BASE + url
+
+
 def driver_info(m):
     return {
         "uid": m["uid"],
@@ -79,13 +87,6 @@ def driver_info(m):
         "avatar_url": full_avatar(m.get("avatar_url")),
     }
 
-
-def full_avatar(url):
-    if not url:
-        return ""
-    if url.startswith("http"):
-        return url
-    return API_BASE + url
 
 # ---------------------------------------------------------------- API
 def fetch_members():
@@ -126,7 +127,7 @@ def fetch_members():
 def sync_members(state, api_members):
     """
     Gleicht members.json mit der API ab:
-    - bestehende Mitglieder: Name/Rang aktualisieren, Counter behalten
+    - bestehende Mitglieder: Name/Rang/Avatar aktualisieren, Counter behalten
     - neue Mitglieder: mit Counter 0 hinzufuegen
     - nicht mehr vorhandene: entfernen
     """
