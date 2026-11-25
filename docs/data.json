@@ -1,7 +1,7 @@
 {
   "date": "2026-11-25",
   "weekday": "Wednesday",
-  "updated_at": "2026-11-25T15:28:16+01:00",
+  "updated_at": "2026-11-25T15:41:26+01:00",
   "allowed_ranks": [
     3
   ],
@@ -156,7 +156,7 @@
         "uid": "272938926352",
         "nick_name": "AinsleyCain",
         "rank_label": "R4",
-        "power": 38003576
+        "power": 37859760
       }
     },
     {
@@ -169,7 +169,7 @@
         "uid": "272790552848",
         "nick_name": "Doctor4NLjmiAH",
         "rank_label": "R3",
-        "power": 19104821
+        "power": 19167337
       }
     },
     {
