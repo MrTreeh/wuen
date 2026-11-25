@@ -43,6 +43,12 @@ const WD_DE = {
   Thursday: "Donnerstag", Friday: "Freitag", Saturday: "Samstag", Sunday: "Sonntag"
 };
 
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c => (
+    { "&": "&", "<": "<", ">": ">", '"': """, "'": "'" }[c]
+  ));
+}
+
 function fmtDate(iso) {
   if (!iso) return "noch nie";
   const [y, m, d] = iso.split("-");
@@ -50,48 +56,41 @@ function fmtDate(iso) {
 }
 
 function fmtPower(p) {
-  if (p === null || p === undefined) return "–";
-  return Number(p).toLocaleString("de-DE");
-}
-
-function esc(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c =>
-    ({ "&": "&", "<": "<", ">": ">", '"': """, "'": "'" }[c]));
+  return (p === undefined || p === null || p === "") ? "–" : Number(p).toLocaleString("de-DE");
 }
 
 fetch("data.json?_=" + Date.now())
-  .then(r => {
-    if (!r.ok) throw new Error("HTTP " + r.status);
-    return r.json();
-  })
+  .then(r => r.json())
   .then(d => {
-    // Heutiger Kutscher
     const dr = d.driver;
-    document.getElementById("today").innerHTML = dr
-      ? `<div class="name">${esc(dr.nick_name)}</div>
-         <div class="meta">${esc(dr.rank_label)}${dr.power != null ? " · Power " + fmtPower(dr.power) : ""} · ${WD_DE[d.weekday] || d.weekday}, ${fmtDate(d.date)}</div>
-         <div class="meta">Fahrberechtigt heute: ${(d.allowed_ranks || []).map(r => "R" + r).join(", ")}</div>` +
-        (d.fallback ? `<div class="warn">Hinweis: Niemand im Topf war aktiv, Auswahl aus allen Mitgliedern.</div>` : "")
-      : `<div class="name">Kein Kutscher verfügbar</div>`;
 
-    // Vorschau nächste 6 Tage
+    // Heutiger Kutscher
+    let html = "";
+    if (dr) {
+      html += `<div class="name">${esc(dr.nick_name)}</div>`;
+      html += `<div class="meta">${esc(dr.rank_label)} · ${WD_DE[d.weekday] || esc(d.weekday)}, ${fmtDate(d.date)}</div>`;
+      html += `<div class="meta">Fahrberechtigt heute: ${(d.allowed_ranks || []).map(r => "R" + r).join(", ")}</div>`;
+    } else {
+      html = "Kein Kutscher gefunden.";
+    }
+    if (d.fallback) {
+      html += `<div class="warn">${esc(d.fallback)}</div>`;
+    }
+    document.getElementById("today").innerHTML = html;
+
+    // Vorschau
     const pb = document.querySelector("#preview tbody");
     pb.innerHTML = "";
-    const pv = d.preview || [];
-    if (!pv.length) {
-      pb.innerHTML = `<tr><td colspan="4" class="small">Keine Vorschau in data.json vorhanden.</td></tr>`;
-    } else {
-      pv.forEach(p => {
-        const m = p.driver;
-        pb.insertAdjacentHTML("beforeend",
-          `<tr>
-            <td>${WD_DE[p.weekday] || esc(p.weekday || "")}, ${fmtDate(p.date)}</td>
-            <td>${m ? esc(m.nick_name) : "–"}</td>
-            <td>${m ? esc(m.rank_label) : ""}</td>
-            <td class="num">${m ? fmtPower(m.power) : ""}</td>
-          </tr>`);
-      });
-    }
+    (d.preview || []).forEach(p => {
+      const m = p.driver;
+      pb.insertAdjacentHTML("beforeend",
+        `<tr>
+          <td>${WD_DE[p.weekday] || esc(p.weekday)}, ${fmtDate(p.date)}</td>
+          <td>${m ? esc(m.nick_name) : "–"}</td>
+          <td>${m ? esc(m.rank_label) : ""}</td>
+          <td class="num">${m ? fmtPower(m.power) : ""}</td>
+        </tr>`);
+    });
 
     // Statistik: niedrigster Counter zuerst, dann am längsten nicht gefahren
     const sorted = [...(d.candidates || [])].sort((a, b) =>
