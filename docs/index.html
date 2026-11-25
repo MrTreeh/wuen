@@ -90,7 +90,7 @@
 </div>
 
 <script>
-const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&","<":"<",">":">",'"':"""}[c]));
+const esc = s => String(s ?? "").replace(/[\u0026\u003c\u003e\u0022]/g, c => "&#" + c.charCodeAt(0) + ";");
 
 fetch("data.json?_=" + Date.now())
   .then(r => {
