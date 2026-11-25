@@ -76,6 +76,7 @@ def driver_info(m):
         "nick_name": m["nick_name"],
         "rank_label": m["rank_label"],
         "power": m.get("power"),
+        "avatar_url": full_avatar(m.get("avatar_url")),
     }
 
 
@@ -143,6 +144,7 @@ def sync_members(state, api_members):
             "rank": parse_rank(m),
             "rank_label": m.get("rank_label", ""),
             "power": m.get("power", prev.get("power", 0)),
+            "avatar_url": m.get("avatar_url") or prev.get("avatar_url", ""),
             "counter": prev.get("counter", 0),
             "last_driven": prev.get("last_driven"),
         })
