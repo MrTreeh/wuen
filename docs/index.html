@@ -44,9 +44,12 @@ const WD_DE = {
 };
 
 function esc(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c => (
-    { "&": "&", "<": "<", ">": ">", '"': """, "'": "'" }[c]
-  ));
+  return String(s ?? "")
+    .split("\u0026").join("\u0026amp;")
+    .split("\u003c").join("\u0026lt;")
+    .split("\u003e").join("\u0026gt;")
+    .split("\u0022").join("\u0026quot;")
+    .split("\u0027").join("\u0026#39;");
 }
 
 function fmtDate(iso) {
