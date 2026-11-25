@@ -60,7 +60,10 @@ fetch("data.json?_=" + Date.now())
     document.getElementById("updated").textContent =
       "Stand: " + d.generated_at.replace("T", " ");
   })
-  .catch(() => { document.getElementById("today").textContent = "data.json konnte nicht geladen werden."; });
+  .catch(err => {
+    console.error("Ladefehler:", err);
+    document.getElementById("today").textContent = "data.json konnte nicht geladen werden.";
+  }
 </script>
 </body>
 </html>
