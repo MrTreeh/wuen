@@ -1,0 +1,120 @@
+{
+  "date": "2026-11-25",
+  "weekday": "Wednesday",
+  "updated_at": "2026-11-25T14:51:24+01:00",
+  "allowed_ranks": [
+    3
+  ],
+  "driver": {
+    "uid": "272920011024",
+    "nick_name": "BilboBaggins79",
+    "rank_label": "R3"
+  },
+  "candidates": [
+    {
+      "uid": "274708046096",
+      "nick_name": "Chriss09385",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "272790552848",
+      "nick_name": "Doctor4NLjmiAH",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "274471469328",
+      "nick_name": "Doctor4PB4jsIl",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "274970272016",
+      "nick_name": "Doctor4Q8PePmv",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "376428044560",
+      "nick_name": "DoctorLarsNacht",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "272878747920",
+      "nick_name": "DoktorLocke",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "272856547600",
+      "nick_name": "DrVanHelsing7856",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "274899763472",
+      "nick_name": "ElPatron220",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "274889400592",
+      "nick_name": "JeLo123",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "274880651536",
+      "nick_name": "KaffeeLatte",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "273327210768",
+      "nick_name": "LordHelmchen2",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "273814380816",
+      "nick_name": "MasteryLuke",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "274988687632",
+      "nick_name": "Pestdoctor69",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "274845925648",
+      "nick_name": "SkyLightPlayer",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
+    {
+      "uid": "272920011024",
+      "nick_name": "BilboBaggins79",
+      "rank_label": "R3",
+      "counter": 1,
+      "last_driven": "2026-11-25"
+    }
+  ]
+}
