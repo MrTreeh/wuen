@@ -49,6 +49,14 @@
   td.num { text-align: right; font-variant-numeric: tabular-nums; }
   tr.first td { color: var(--accent); font-weight: 600; }
   footer { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 24px; }
+  .avatar {
+    border-radius: 50%; object-fit: cover; background: var(--panel2);
+    border: 2px solid var(--line); flex: none;
+  }
+  .avatar.big { width: 84px; height: 84px; border-color: var(--accent); }
+  .avatar.small { width: 32px; height: 32px; }
+  .who { display: flex; align-items: center; gap: 12px; }
+  .namecell { display: flex; align-items: center; gap: 10px; }
 </style>
 </head>
 <body>
@@ -59,6 +67,7 @@
 
   <div class="card">
     <div class="driver">
+      <img id="driver-avatar" class="avatar big" alt="" referrerpolicy="no-referrer">
       <div>
         <div class="name" id="driver-name">–</div>
         <span class="badge" id="driver-rank">–</span>
@@ -92,12 +101,18 @@
 <script>
 const esc = s => String(s ?? "").replace(/[\u0026\u003c\u003e\u0022]/g, c => "&#" + c.charCodeAt(0) + ";");
 
+const avatar = (url, cls) =>
+  url ? `<img class="avatar ${cls}" src="${esc(url)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">`
+      : `<span class="avatar ${cls}"></span>`;
+  
 fetch("data.json?_=" + Date.now())
   .then(r => {
     if (!r.ok) throw new Error("data.json: HTTP " + r.status);
     return r.json();
   })
   .then(d => {
+    const da = document.getElementById("driver-avatar");
+    if (d.driver.avatar_url) da.src = d.driver.avatar_url; else da.style.visibility = "hidden";
     document.getElementById("date").textContent = d.weekday + ", " + d.date;
     document.getElementById("driver-name").textContent = d.driver.nick_name;
     document.getElementById("driver-rank").textContent = d.driver.rank_label;
@@ -105,14 +120,14 @@ fetch("data.json?_=" + Date.now())
 
     document.getElementById("cand-body").innerHTML = d.candidates.map((m, i) =>
       `<tr class="${i === 0 ? "first" : ""}">
-         <td>${i + 1}</td><td>${esc(m.nick_name)}</td><td>${esc(m.rank_label)}</td>
+         <td>${i + 1}</td><td><div class="namecell">${avatar(m.avatar_url, "small")}${esc(m.nick_name)}</div></td><td>${esc(m.rank_label)}</td>
          <td class="num">${m.counter}</td><td>${esc(m.last_driven || "–")}</td>
        </tr>`).join("");
 
     document.getElementById("prev-body").innerHTML = d.preview.map(p =>
       `<tr><td>${esc(p.date)}</td><td>${esc(p.weekday)}</td>
        <td>R${p.allowed_ranks.join(", R")}</td>
-       <td>${p.driver ? esc(p.driver.nick_name) : "–"}</td></tr>`).join("");
+       <td>${p.driver ? `<div class="namecell">${avatar(p.driver.avatar_url, "small")}${esc(p.driver.nick_name)}</div>` : "–"}</td></tr>`).join("");
 
     document.getElementById("updated").textContent = "Stand: " + d.updated_at;
   })
