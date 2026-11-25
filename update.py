@@ -7,6 +7,8 @@ Taeglicher Kutscher-Update:
 - Niedrigster Counter zuerst, Erstplatzierter bekommt +1
 - Vorschau der naechsten 6 Tage simulieren (ohne echte Counter zu aendern)
 - data.json fuer die Website schreiben
+
+Testmodus: FORCE_RUN=1 -> Auswahl laeuft bei jedem Aufruf neu und zaehlt hoch.
 """
 
 import copy
@@ -32,6 +34,7 @@ DATA_FILE = "docs/data.json"
 TZ = ZoneInfo("Europe/Berlin")
 
 PREVIEW_DAYS = 6
+FORCE_RUN = os.environ.get("FORCE_RUN") == "1"
 
 # Wochentage: Monday=0 ... Sunday=6
 HIGH_RANK_DAYS = {1, 5}          # Dienstag, Samstag -> R4+R5
@@ -189,26 +192,28 @@ def main():
 
     state = load_state()
 
-    # Idempotenz: lief fuer heute schon ein Auswahl-Lauf, Counter nicht nochmal erhoehen
-    already_done = False
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, encoding="utf-8") as f:
-                last = json.load(f)
-            already_done = last.get("date") == today_str
-        except (json.JSONDecodeError, OSError):
-            pass
+    # Idempotenz: Der Tag gilt nur als erledigt, wenn members.json wirklich
+    # einen Fahrer von heute enthaelt (nicht data.json!).
+    already_done = any(m.get("last_driven") == today_str for m in state)
+
+    if FORCE_RUN:
+        print("TESTMODUS: FORCE_RUN=1, Idempotenz deaktiviert", file=sys.stderr)
+        already_done = False
 
     api_members = fetch_members()
     state = sync_members(state, api_members)
 
+    # Nach dem Sync nochmal pruefen (falls der heutige Fahrer ausgetreten ist)
+    if not FORCE_RUN:
+        already_done = any(m.get("last_driven") == today_str for m in state)
+
+    print(f"already_done={already_done}, "
+          f"Kandidaten={len(candidates_for(state, today))}", file=sys.stderr)
+
     if already_done:
-        # Wer heute schon gefahren ist, bleibt der Fahrer (Counter wurde bereits erhoeht)
         print("Fuer heute bereits gelaufen - Counter bleibt unveraendert",
               file=sys.stderr)
-        todays = [m for m in state
-                  if m["last_driven"] == today_str
-                  and m["rank"] in allowed_ranks_for(today)]
+        todays = [m for m in state if m["last_driven"] == today_str]
         pool = candidates_for(state, today)
         if not pool:
             raise RuntimeError("Keine Kandidaten fuer heute gefunden")
@@ -222,6 +227,8 @@ def main():
             if m["uid"] == top["uid"]:
                 m["counter"] += 1
                 m["last_driven"] = today_str
+        print(f"Counter erhoeht: {top['nick_name']} -> {top['counter']}",
+              file=sys.stderr)
         # Pool nach dem +1 neu sortieren, damit die Anzeige stimmt
         pool = candidates_for(state, today)
 
