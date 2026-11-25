@@ -1,187 +1,66 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Allianz-Mitglieder</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { font-family: system-ui, sans-serif; margin: 1rem; background: #f5f5f5; }
-    h1 { margin: 0 0 0.5rem; font-size: 1.5rem; }
-
-    .toolbar { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
-    #sortSelect, #dirBtn { padding: 0.4rem 0.6rem; font-size: 1rem; }
-    #sortbar { display: none; }
-
-    table { border-collapse: collapse; width: 100%; background: #fff; }
-    th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
-    th { background: #333; color: #fff; cursor: pointer; user-select: none; white-space: nowrap; }
-    th:hover { background: #555; }
-    td.num, th.num { text-align: right; }
-    tr:hover td { background: #f0f7ff; }
-    img { width: 32px; height: 32px; border-radius: 50%; vertical-align: middle; }
-    .online { color: green; font-weight: bold; }
-    .offline { color: #999; }
-
-    /* ---------- Smartphone-Ansicht ---------- */
-    @media (max-width: 700px) {
-      body { margin: 0.75rem; }
-      #sortbar { display: flex; }
-
-      table, thead, tbody, tr, td { display: block; }
-      thead { display: none; }            /* Spaltenköpfe weg, Sortierung per Dropdown */
-      table { background: transparent; }
-
-      tr {
-        background: #fff;
-        margin-bottom: 0.75rem;
-        padding: 0.6rem 0.75rem;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.12);
-        display: grid;
-        grid-template-columns: 40px 1fr auto;
-        gap: 0.15rem 0.6rem;
-        align-items: center;
-      }
-      td { border: 0; padding: 0; }
-      tr:hover td { background: transparent; }
-
-      /* Kopfzeile der Karte: Avatar | Name | Rang */
-      td[data-label="avatar"] { grid-row: 1 / span 2; }
-      td[data-label="name"]   { font-weight: bold; font-size: 1.05rem; }
-      td[data-label="rang"]   { text-align: right; font-weight: bold; }
-      td[data-label="status"] { grid-column: 2 / 4; font-size: 0.85rem; }
-
-      /* Zahlenwerte als Label/Wert-Paare darunter */
-      td.stat {
-        grid-column: 1 / 4;
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.9rem;
-        padding: 0.15rem 0;
-        border-top: 1px solid #eee;
-      }
-      td.stat::before { content: attr(data-label); color: #666; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kutscher-Auswahl</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+  h1 { font-size: 1.4rem; }
+  .today { background: #eef6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; }
+  .today .name { font-size: 1.6rem; font-weight: 700; }
+  .today .meta { color: #555; margin-top: .25rem; }
+  .warn { background: #fff4e5; border: 1px solid #f59e0b; padding: .5rem .75rem; border-radius: 8px; margin-top: .75rem; font-size: .9rem; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+  th, td { text-align: left; padding: .4rem .5rem; border-bottom: 1px solid #ddd; }
+  th { font-size: .85rem; color: #666; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .small { color: #777; font-size: .85rem; }
+</style>
 </head>
 <body>
-  <h1>Allianz-Mitglieder</h1>
-  <p id="info">Lade Daten …</p>
+<h1>Wer fährt heute?</h1>
+<div id="today" class="today">Lade …</div>
 
-  <!-- Sortierung für Smartphone -->
-  <div id="sortbar" class="toolbar">
-    <label for="sortSelect">Sortieren:</label>
-    <select id="sortSelect">
-      <option value="power">Power</option>
-      <option value="nick_name">Name</option>
-      <option value="rank_code">Rang</option>
-      <option value="lv">Level</option>
-      <option value="kills">Kills</option>
-      <option value="active">Aktiv</option>
-      <option value="daily_honor">Honor (täglich)</option>
-      <option value="daily_tech">Tech (täglich)</option>
-    </select>
-    <button id="dirBtn" type="button">↓</button>
-  </div>
+<h2>Voraussichtlich die nächsten 6 Tage</h2>
+<table id="preview"><thead><tr><th>Tag</th><th>Name</th><th>Rang</th><th class="num">Power</th></tr></thead><tbody></tbody></table>
 
-  <table id="tabelle" hidden>
-    <thead>
-      <tr>
-        <th data-key=""></th>
-        <th data-key="nick_name">Name</th>
-        <th data-key="rank_code">Rang</th>
-        <th data-key="lv" class="num">Level</th>
-        <th data-key="power" class="num">Power</th>
-        <th data-key="kills" class="num">Kills</th>
-        <th data-key="active" class="num">Aktiv</th>
-        <th data-key="daily_honor" class="num">Honor (täglich)</th>
-        <th data-key="daily_tech" class="num">Tech (täglich)</th>
-        <th data-key="online">Status</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+<h2>Statistik</h2>
+<table id="stats"><thead><tr><th>Name</th><th>Rang</th><th class="num">Fahrten</th><th>Zuletzt</th></tr></thead><tbody></tbody></table>
 
-  <script>
-    // Domain der API, damit die relativen Avatar-Pfade funktionieren
-    const ASSET_BASE = "https://DEINE-API-DOMAIN";
+<p class="small" id="updated"></p>
 
-    const num = v => (v ?? 0).toLocaleString("de-DE");
-    let members = [];
-    let sortKey = "power";
-    let sortDir = -1; // -1 = absteigend
+<script>
+const WD = ["So","Mo","Di","Mi","Do","Fr","Sa"];
+const fmtPower = n => Number(n).toLocaleString("de-DE");
+const fmtDate = iso => { const [y,m,d] = iso.split("-"); return `${d}.${m}.${y}`; };
 
-    function render() {
-      const body = document.querySelector("#tabelle tbody");
-      body.innerHTML = "";
+fetch("data.json?_=" + Date.now())
+  .then(r => r.json())
+  .then(d => {
+    const t = d.today;
+    document.getElementById("today").innerHTML =
+      `<div class="name">${t.name}</div>
+       <div class="meta">Rang ${t.rank} · Power ${fmtPower(t.power)}</div>` +
+      (t.fallback ? `<div class="warn">Hinweis: Niemand im Topf war aktiv, Auswahl aus allen Mitgliedern.</div>` : "");
 
-      const sorted = [...members].sort((a, b) => {
-        const x = a[sortKey], y = b[sortKey];
-        if (typeof x === "string" || typeof y === "string") {
-          return String(x ?? "").localeCompare(String(y ?? ""), "de") * sortDir;
-        }
-        return ((x ?? 0) - (y ?? 0)) * sortDir;
-      });
-
-      for (const m of sorted) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td data-label="avatar">${m.avatar_url ? `<img src="${ASSET_BASE}${m.avatar_url}" alt="" onerror="this.style.display='none'">` : ""}</td>
-          <td data-label="name">${m.nick_name ?? "-"}</td>
-          <td data-label="rang">${m.rank_label ?? "-"}</td>
-          <td class="num stat" data-label="Level">${num(m.lv)}</td>
-          <td class="num stat" data-label="Power">${num(m.power)}</td>
-          <td class="num stat" data-label="Kills">${num(m.kills)}</td>
-          <td class="num stat" data-label="Aktiv">${num(m.active)}</td>
-          <td class="num stat" data-label="Honor (täglich)">${num(m.daily_honor)}</td>
-          <td class="num stat" data-label="Tech (täglich)">${num(m.daily_tech)}</td>
-          <td data-label="status" class="${m.online ? "online" : "offline"}">${m.online ? "online" : "offline"}</td>`;
-        body.appendChild(tr);
-      }
-
-      // Dropdown/Button synchron halten
-      document.getElementById("sortSelect").value = sortKey;
-      document.getElementById("dirBtn").textContent = sortDir === -1 ? "↓" : "↑";
-    }
-
-    function setSort(key) {
-      if (!key) return;
-      if (sortKey === key) sortDir *= -1;
-      else { sortKey = key; sortDir = -1; }
-      render();
-    }
-
-    // Desktop: Klick auf Spaltenkopf
-    document.querySelectorAll("th[data-key]").forEach(th => {
-      th.addEventListener("click", () => setSort(th.dataset.key));
+    const pb = document.querySelector("#preview tbody");
+    d.preview.forEach(p => {
+      const wd = WD[(new Date(p.date).getDay())];
+      pb.insertAdjacentHTML("beforeend",
+        `<tr><td>${wd} ${fmtDate(p.date).slice(0,5)}</td><td>${p.name}</td><td>R${p.rank}</td><td class="num">${fmtPower(p.power)}</td></tr>`);
     });
 
-    // Smartphone: Dropdown + Richtungs-Button
-    document.getElementById("sortSelect").addEventListener("change", e => {
-      sortKey = e.target.value;
-      sortDir = -1;
-      render();
-    });
-    document.getElementById("dirBtn").addEventListener("click", () => {
-      sortDir *= -1;
-      render();
+    const sb = document.querySelector("#stats tbody");
+    d.stats.forEach(s => {
+      sb.insertAdjacentHTML("beforeend",
+        `<tr><td>${s.name}</td><td>R${s.rank}</td><td class="num">${s.counter}</td><td>${fmtDate(s.last_driven)}</td></tr>`);
     });
 
-    fetch("members.json")
-      .then(r => {
-        if (!r.ok) throw new Error("HTTP " + r.status);
-        return r.json();
-      })
-      .then(data => {
-        members = data;
-        document.getElementById("info").textContent = members.length + " Mitglieder";
-        document.getElementById("tabelle").hidden = false;
-        render();
-      })
-      .catch(err => {
-        document.getElementById("info").textContent = "Fehler beim Laden: " + err.message;
-      });
-  </script>
+    document.getElementById("updated").textContent =
+      "Stand: " + d.generated_at.replace("T", " ");
+  })
+  .catch(() => { document.getElementById("today").textContent = "data.json konnte nicht geladen werden."; });
+</script>
 </body>
 </html>
