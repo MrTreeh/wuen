@@ -25,8 +25,8 @@ API_URL = os.environ.get(
 API_KEY = os.environ["API_KEY"]
 MAX_AGE_SECONDS = 6 * 3600
 
-MEMBERS_FILE = "members.json"
-DATA_FILE = "data.json"
+MEMBERS_FILE = "docs/members.json"
+DATA_FILE = "docs/data.json"
 TZ = ZoneInfo("Europe/Berlin")
 
 # Wochentage: Monday=0 ... Sunday=6
@@ -53,6 +53,7 @@ def load_state():
 
 
 def save_json(path, obj):
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
 
