@@ -31,34 +31,42 @@
 <p class="small" id="updated"></p>
 
 <script>
-const WD = ["So","Mo","Di","Mi","Do","Fr","Sa"];
-const fmtPower = n => Number(n).toLocaleString("de-DE");
-const fmtDate = iso => { const [y,m,d] = iso.split("-"); return `${d}.${m}.${y}`; };
+const WD_DE = {
+  Monday: "Montag", Tuesday: "Dienstag", Wednesday: "Mittwoch",
+  Thursday: "Donnerstag", Friday: "Freitag", Saturday: "Samstag", Sunday: "Sonntag"
+};
+
+function fmtDate(iso) {
+  if (!iso) return "noch nie";
+  const [y, m, d] = iso.split("-");
+  return `${d}.${m}.${y}`;
+}
 
 fetch("data.json?_=" + Date.now())
   .then(r => r.json())
   .then(d => {
-    const t = d.today;
+    // Heutiger Kutscher
     document.getElementById("today").innerHTML =
-      `<div class="name">${t.name}</div>
-       <div class="meta">Rang ${t.rank} · Power ${fmtPower(t.power)}</div>` +
-      (t.fallback ? `<div class="warn">Hinweis: Niemand im Topf war aktiv, Auswahl aus allen Mitgliedern.</div>` : "");
+      `<div class="name">${d.driver.nick_name}</div>
+       <div class="meta">${d.driver.rank_label} · ${WD_DE[d.weekday] || d.weekday}, ${fmtDate(d.date)}</div>
+       <div class="meta">Fahrberechtigt heute: ${d.allowed_ranks.map(r => "R" + r).join(", ")}</div>`;
 
-    const pb = document.querySelector("#preview tbody");
-    d.preview.forEach(p => {
-      const wd = WD[(new Date(p.date).getDay())];
-      pb.insertAdjacentHTML("beforeend",
-        `<tr><td>${wd} ${fmtDate(p.date).slice(0,5)}</td><td>${p.name}</td><td>R${p.rank}</td><td class="num">${fmtPower(p.power)}</td></tr>`);
-    });
+    // Kandidaten, sortiert: niedrigster Counter zuerst, dann am längsten nicht gefahren
+    const sorted = [...d.candidates].sort((a, b) =>
+      a.counter - b.counter ||
+      (a.last_driven || "").localeCompare(b.last_driven || "") ||
+      a.nick_name.localeCompare(b.nick_name)
+    );
 
     const sb = document.querySelector("#stats tbody");
-    d.stats.forEach(s => {
+    sb.innerHTML = "";
+    sorted.forEach(s => {
       sb.insertAdjacentHTML("beforeend",
-        `<tr><td>${s.name}</td><td>R${s.rank}</td><td class="num">${s.counter}</td><td>${fmtDate(s.last_driven)}</td></tr>`);
+        `<tr><td>${s.nick_name}</td><td>${s.rank_label}</td><td class="num">${s.counter}</td><td>${fmtDate(s.last_driven)}</td></tr>`);
     });
 
     document.getElementById("updated").textContent =
-      "Stand: " + d.generated_at.replace("T", " ");
+      "Stand: " + d.updated_at.replace("T", " ").slice(0, 16);
   })
   .catch(err => {
     console.error("Ladefehler:", err);
