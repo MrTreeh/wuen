@@ -1,16 +1,24 @@
 {
   "date": "2026-11-25",
   "weekday": "Wednesday",
-  "updated_at": "2026-11-25T14:57:17+01:00",
+  "updated_at": "2026-11-25T15:28:16+01:00",
   "allowed_ranks": [
     3
   ],
   "driver": {
     "uid": "272920011024",
     "nick_name": "BilboBaggins79",
-    "rank_label": "R3"
+    "rank_label": "R3",
+    "power": 19448330
   },
   "candidates": [
+    {
+      "uid": "272920011024",
+      "nick_name": "BilboBaggins79",
+      "rank_label": "R3",
+      "counter": 0,
+      "last_driven": null
+    },
     {
       "uid": "274708046096",
       "nick_name": "Chriss09385",
@@ -108,13 +116,88 @@
       "rank_label": "R3",
       "counter": 0,
       "last_driven": null
+    }
+  ],
+  "preview": [
+    {
+      "date": "2026-11-26",
+      "weekday": "Thursday",
+      "allowed_ranks": [
+        3
+      ],
+      "driver": {
+        "uid": "272920011024",
+        "nick_name": "BilboBaggins79",
+        "rank_label": "R3",
+        "power": 19448330
+      }
     },
     {
-      "uid": "272920011024",
-      "nick_name": "BilboBaggins79",
-      "rank_label": "R3",
-      "counter": 1,
-      "last_driven": "2026-11-25"
+      "date": "2026-11-27",
+      "weekday": "Friday",
+      "allowed_ranks": [
+        3
+      ],
+      "driver": {
+        "uid": "274708046096",
+        "nick_name": "Chriss09385",
+        "rank_label": "R3",
+        "power": 34089614
+      }
+    },
+    {
+      "date": "2026-11-28",
+      "weekday": "Saturday",
+      "allowed_ranks": [
+        4,
+        5
+      ],
+      "driver": {
+        "uid": "272938926352",
+        "nick_name": "AinsleyCain",
+        "rank_label": "R4",
+        "power": 38003576
+      }
+    },
+    {
+      "date": "2026-11-29",
+      "weekday": "Sunday",
+      "allowed_ranks": [
+        3
+      ],
+      "driver": {
+        "uid": "272790552848",
+        "nick_name": "Doctor4NLjmiAH",
+        "rank_label": "R3",
+        "power": 19104821
+      }
+    },
+    {
+      "date": "2026-11-30",
+      "weekday": "Monday",
+      "allowed_ranks": [
+        3
+      ],
+      "driver": {
+        "uid": "274471469328",
+        "nick_name": "Doctor4PB4jsIl",
+        "rank_label": "R3",
+        "power": 13176871
+      }
+    },
+    {
+      "date": "2026-12-01",
+      "weekday": "Tuesday",
+      "allowed_ranks": [
+        4,
+        5
+      ],
+      "driver": {
+        "uid": "274966495504",
+        "nick_name": "Akamexx",
+        "rank_label": "R4",
+        "power": 44120719
+      }
     }
   ]
 }
