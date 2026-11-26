@@ -131,7 +131,8 @@ fetch("data.json?_=" + Date.now())
       Donnerstag: "day-thu", Freitag: "day-fri", Samstag: "day-sat", Sonntag: "day-sun"
     };
     const dateEl = document.getElementById("date");
-    dateEl.textContent = d.weekday + ", " + d.date;
+    const [y, m, day] = d.date.split("-");
+    dateEl.textContent = d.weekday + ", " + day + "." + m + "." + y;
     dateEl.classList.add(dayClasses[d.weekday] || "");
     document.getElementById("driver-name").textContent = d.driver.nick_name;
     document.getElementById("driver-rank").textContent = d.driver.rank_label;
