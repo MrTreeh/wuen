@@ -251,7 +251,9 @@ def main():
     preview = build_preview(state, today)
 
     # Statistik: alle Mitglieder, unabhaengig vom heutigen Tag
-    all_sorted = sorted(state, key=sort_key)
+    STATS_RANKS = {3, 4, 5}
+    stats_pool = [m for m in state if m["rank"] in STATS_RANKS]
+    all_sorted = sorted(stats_pool, key=sort_key)
     allowed_today = allowed_ranks_for(today)
 
     data = {
