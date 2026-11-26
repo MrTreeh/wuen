@@ -35,6 +35,20 @@
     background: var(--panel2); border: 1px solid var(--line);
     color: var(--accent); font-size: .85rem;
   }
+  .driver-info { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .day-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    font-size: .85rem; font-weight: 600; color: #0e1116;
+    background: var(--day, #8b98a8);
+  }
+  /* Farbe je Wochentag */
+  .day-mon { --day: #4cc9f0; }   /* Montag   - Hellblau */
+  .day-tue { --day: #f72585; }   /* Dienstag - Pink */
+  .day-wed { --day: #7bd389; }   /* Mittwoch - Gruen */
+  .day-thu { --day: #ffb703; }   /* Donnerstag - Gelb */
+  .day-fri { --day: #9d4edd; }   /* Freitag  - Lila */
+  .day-sat { --day: #ff6b35; }   /* Samstag  - Orange */
+  .day-sun { --day: #e63946; }   /* Sonntag  - Rot */
   .hint { color: var(--muted); font-size: .9rem; }
   .tabs { display: flex; gap: 8px; margin-bottom: 12px; }
   .tab {
@@ -67,10 +81,10 @@
   <div class="card">
     <div class="driver">
       <img id="driver-avatar" class="avatar big" alt="" referrerpolicy="no-referrer">
-      <div>
+      <div class="driver-info">
         <div class="name" id="driver-name">–</div>
         <span class="badge" id="driver-rank">–</span>
-        <div class="sub" id="date">Lade ...</div>
+        <span class="day-badge" id="date">Lade ...</span>
       </div>
     </div>
   </div>
