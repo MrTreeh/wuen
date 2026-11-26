@@ -1,15 +1,15 @@
 {
   "date": "2026-11-26",
   "weekday": "Thursday",
-  "updated_at": "2026-11-26T16:04:01+01:00",
+  "updated_at": "2026-11-26T16:15:36+01:00",
   "allowed_ranks": [
     3
   ],
   "driver": {
-    "uid": "274471469328",
-    "nick_name": "Doctor4PB4jsIl",
+    "uid": "272790552848",
+    "nick_name": "Doctor4NLjmiAH",
     "rank_label": "R3",
-    "power": 13674766,
+    "power": 19494293,
     "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
   },
   "candidates": [
@@ -41,156 +41,12 @@
       "eligible_today": false
     },
     {
-      "uid": "273014210832",
-      "nick_name": "ArnDoran",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "274747670800",
-      "nick_name": "Aschoka",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "274428543248",
-      "nick_name": "BenKnobi",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273289453840",
-      "nick_name": "bfi",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
       "uid": "272620060944",
       "nick_name": "Claudine006",
       "rank_label": "R4 · Diplomat",
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273511604496",
-      "nick_name": "DerKleineNik",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273104806160",
-      "nick_name": "Doctor4O6zVWo6",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273139581200",
-      "nick_name": "Doctor4O8VQw88",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273205575952",
-      "nick_name": "Doctor4OdoKLCl",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273605157136",
-      "nick_name": "Doctor4OErm5qT",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273657643280",
-      "nick_name": "Doctor4OHZA882",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273289494800",
-      "nick_name": "Doctor4Oj4RTqu",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273422639376",
-      "nick_name": "Doctor4Os5wSAW",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273430069520",
-      "nick_name": "Doctor4OsAHNC2",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273462698256",
-      "nick_name": "Doctor4OuNC1yA",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273853153552",
-      "nick_name": "Doctor4OVdVhCL",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "274193309968",
-      "nick_name": "Doctor4Pifbvq2",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
       "eligible_today": false
     },
     {
@@ -201,42 +57,6 @@
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
       "eligible_today": true
-    },
-    {
-      "uid": "275023208720",
-      "nick_name": "Doctor4Qcpm5ar",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "275023323408",
-      "nick_name": "Doctor4QcpPUYm",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "515646259472",
-      "nick_name": "Doctor94QL9CMP",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273364828432",
-      "nick_name": "DoctorJB05",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
     },
     {
       "uid": "376428044560",
@@ -275,15 +95,6 @@
       "eligible_today": true
     },
     {
-      "uid": "273325973776",
-      "nick_name": "Foffi98",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
       "uid": "274889400592",
       "nick_name": "JeLo123",
       "rank_label": "R3",
@@ -293,15 +104,6 @@
       "eligible_today": true
     },
     {
-      "uid": "273828929808",
-      "nick_name": "JustaCuteCat",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
       "uid": "274880651536",
       "nick_name": "KaffeeLatte",
       "rank_label": "R3",
@@ -309,24 +111,6 @@
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
       "eligible_today": true
-    },
-    {
-      "uid": "273365188880",
-      "nick_name": "Kloras",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://phs-image.globallap.com/ASTC6_273365188880_1783719337138.jpg",
-      "eligible_today": false
-    },
-    {
-      "uid": "273706606864",
-      "nick_name": "KristofSmauel",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://phs-image.globallap.com/ASTC6_273706606864_1783892574976.jpg",
-      "eligible_today": false
     },
     {
       "uid": "273327210768",
@@ -347,15 +131,6 @@
       "eligible_today": false
     },
     {
-      "uid": "273923506448",
-      "nick_name": "MariLo",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
       "uid": "273814380816",
       "nick_name": "MasteryLuke",
       "rank_label": "R3",
@@ -365,48 +140,12 @@
       "eligible_today": true
     },
     {
-      "uid": "272884220176",
-      "nick_name": "Mattheo1905",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "272690069776",
-      "nick_name": "MDK1978",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "481438204176",
-      "nick_name": "Mikiriki",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
       "uid": "273274650896",
       "nick_name": "MrsLin266",
       "rank_label": "R4 · Militarist",
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_273274650896_1795556717591.jpg",
-      "eligible_today": false
-    },
-    {
-      "uid": "273335714064",
-      "nick_name": "Nadakan1",
-      "rank_label": "",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
       "eligible_today": false
     },
     {
@@ -422,51 +161,6 @@
       "uid": "272784654608",
       "nick_name": "Raubmöwe",
       "rank_label": "R5",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "274845925648",
-      "nick_name": "SkyLightPlayer",
-      "rank_label": "R2",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "272827056400",
-      "nick_name": "strelitzluise",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "274556797200",
-      "nick_name": "TBase67",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "273837654288",
-      "nick_name": "ValentyMuntoni",
-      "rank_label": "R1",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
-    },
-    {
-      "uid": "274881151248",
-      "nick_name": "Wolfhart",
-      "rank_label": "R1",
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",

@@ -24,7 +24,7 @@
     "nick_name": "ElPatron220",
     "rank": 3,
     "rank_label": "R3",
-    "power": 46602752,
+    "power": 46641051,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -74,7 +74,7 @@
     "nick_name": "MrsLin266",
     "rank": 4,
     "rank_label": "R4 · Militarist",
-    "power": 32761682,
+    "power": 32782998,
     "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_273274650896_1795556717591.jpg",
     "counter": 0,
     "last_driven": null
@@ -104,7 +104,7 @@
     "nick_name": "JeLo123",
     "rank": 3,
     "rank_label": "R3",
-    "power": 30044990,
+    "power": 30059272,
     "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
@@ -134,7 +134,7 @@
     "nick_name": "BenKnobi",
     "rank": 2,
     "rank_label": "R2",
-    "power": 25874948,
+    "power": 25884084,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -145,6 +145,16 @@
     "rank": 1,
     "rank_label": "R1",
     "power": 22362428,
+    "avatar_url": "/static/avatars/head_90001.png",
+    "counter": 0,
+    "last_driven": null
+  },
+  {
+    "uid": "274845925648",
+    "nick_name": "SkyLightPlayer",
+    "rank": 2,
+    "rank_label": "R2",
+    "power": 22246205,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -206,16 +216,6 @@
     "rank_label": "R1",
     "power": 16574485,
     "avatar_url": "https://phs-image.globallap.com/ASTC6_273365188880_1783719337138.jpg",
-    "counter": 0,
-    "last_driven": null
-  },
-  {
-    "uid": "274845925648",
-    "nick_name": "SkyLightPlayer",
-    "rank": 2,
-    "rank_label": "R2",
-    "power": 16150162,
-    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
