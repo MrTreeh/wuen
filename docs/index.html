@@ -63,7 +63,6 @@
 <div class="wrap">
   <div class="eyebrow">Kutscher-Board</div>
   <h1>Heutiger Fahrer</h1>
-  <p class="sub" id="date">Lade ...</p>
 
   <div class="card">
     <div class="driver">
@@ -71,8 +70,8 @@
       <div>
         <div class="name" id="driver-name">–</div>
         <span class="badge" id="driver-rank">–</span>
+        <div class="sub" id="date">Lade ...</div>
       </div>
-      <div class="hint" id="ranks"></div>
     </div>
   </div>
 
@@ -116,7 +115,6 @@ fetch("data.json?_=" + Date.now())
     document.getElementById("date").textContent = d.weekday + ", " + d.date;
     document.getElementById("driver-name").textContent = d.driver.nick_name;
     document.getElementById("driver-rank").textContent = d.driver.rank_label;
-    document.getElementById("ranks").textContent = "Erlaubte Ränge: R" + d.allowed_ranks.join(", R");
 
     document.getElementById("cand-body").innerHTML = d.candidates.map((m, i) =>
       `<tr class="${i === 0 ? "first" : ""}">
