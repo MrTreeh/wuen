@@ -127,7 +127,7 @@ def fetch_members():
 def sync_members(state, api_members):
     """
     Gleicht members.json mit der API ab:
-    - bestehende Mitglieder: Name/Rang/Avatar aktualisieren, Counter behalten
+    - bestehende Mitglieder: Name/Rang aktualisieren, Counter behalten
     - neue Mitglieder: mit Counter 0 hinzufuegen
     - nicht mehr vorhandene: entfernen
     """
@@ -158,16 +158,22 @@ def sync_members(state, api_members):
 
 
 # ---------------------------------------------------------------- Auswahl
+def sort_key(m):
+    """Gemeinsame Sortierung fuer Auswahl und Statistik:
+    niedrigster Counter zuerst, bei Gleichstand wer am laengsten nicht
+    gefahren ist (noch nie = zuerst), dann Name."""
+    return (
+        m["counter"],
+        m["last_driven"] or "",
+        m["nick_name"].lower(),
+    )
+
+
 def candidates_for(state, day):
-    """Kandidaten fuer den Tag, sortiert: niedrigster Counter zuerst,
-    bei Gleichstand wer am laengsten nicht gefahren ist, dann Name."""
+    """Kandidaten fuer den Tag (nur erlaubte Raenge), sortiert via sort_key."""
     allowed = allowed_ranks_for(day)
     pool = [m for m in state if m["rank"] in allowed]
-    pool.sort(key=lambda m: (
-        m["counter"],
-        m["last_driven"] or "",      # None/leer = noch nie gefahren -> zuerst
-        m["nick_name"].lower(),
-    ))
+    pool.sort(key=sort_key)
     return pool
 
 
@@ -240,17 +246,19 @@ def main():
                 m["last_driven"] = today_str
         print(f"Counter erhoeht: {top['nick_name']} -> {top['counter']}",
               file=sys.stderr)
-        # Pool nach dem +1 neu sortieren, damit die Anzeige stimmt
-        pool = candidates_for(state, today)
 
     # Vorschau auf Basis des Zustands NACH der heutigen Auswahl
     preview = build_preview(state, today)
+
+    # Statistik: alle Mitglieder, unabhaengig vom heutigen Tag
+    all_sorted = sorted(state, key=sort_key)
+    allowed_today = allowed_ranks_for(today)
 
     data = {
         "date": today_str,
         "weekday": today.strftime("%A"),
         "updated_at": now.isoformat(timespec="seconds"),
-        "allowed_ranks": sorted(allowed_ranks_for(today)),
+        "allowed_ranks": sorted(allowed_today),
         "driver": driver_info(top),
         "candidates": [
             {
@@ -260,8 +268,9 @@ def main():
                 "counter": m["counter"],
                 "last_driven": m["last_driven"],
                 "avatar_url": full_avatar(m.get("avatar_url")),
+                "eligible_today": m["rank"] in allowed_today,
             }
-            for m in pool
+            for m in all_sorted
         ],
         "preview": preview,
     }
