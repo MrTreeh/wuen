@@ -114,10 +114,17 @@
 <script>
 const esc = s => String(s ?? "").replace(/[\u0026\u003c\u003e\u0022]/g, c => "&#" + c.charCodeAt(0) + ";");
 
+// ISO-Datum (YYYY-MM-DD) -> TT.MM.JJJJ
+const fmtDate = iso => {
+  if (!iso) return "–";
+  const [y, m, d] = String(iso).slice(0, 10).split("-");
+  return d + "." + m + "." + y;
+};
+
 const avatar = (url, cls) =>
   url ? `<img class="avatar ${cls}" src="${esc(url)}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.style.visibility='hidden'">`
       : `<span class="avatar ${cls}"></span>`;
-  
+
 fetch("data.json?_=" + Date.now())
   .then(r => {
     if (!r.ok) throw new Error("data.json: HTTP " + r.status);
@@ -126,25 +133,26 @@ fetch("data.json?_=" + Date.now())
   .then(d => {
     const da = document.getElementById("driver-avatar");
     if (d.driver.avatar_url) da.src = d.driver.avatar_url; else da.style.visibility = "hidden";
+
     const dayClasses = {
       Montag: "day-mon", Dienstag: "day-tue", Mittwoch: "day-wed",
       Donnerstag: "day-thu", Freitag: "day-fri", Samstag: "day-sat", Sonntag: "day-sun"
     };
     const dateEl = document.getElementById("date");
-    const [y, m, day] = d.date.split("-");
-    dateEl.textContent = d.weekday + ", " + day + "." + m + "." + y;
+    dateEl.textContent = d.weekday + ", " + fmtDate(d.date);
     dateEl.classList.add(dayClasses[d.weekday] || "");
+
     document.getElementById("driver-name").textContent = d.driver.nick_name;
     document.getElementById("driver-rank").textContent = d.driver.rank_label;
 
     document.getElementById("cand-body").innerHTML = d.candidates.map((m, i) =>
       `<tr class="${i === 0 ? "first" : ""}">
          <td>${i + 1}</td><td><div class="namecell">${avatar(m.avatar_url, "small")}${esc(m.nick_name)}</div></td><td>${esc(m.rank_label)}</td>
-         <td class="num">${m.counter}</td><td>${esc(m.last_driven || "–")}</td>
+         <td class="num">${m.counter}</td><td>${fmtDate(m.last_driven)}</td>
        </tr>`).join("");
 
     document.getElementById("prev-body").innerHTML = d.preview.map(p =>
-      `<tr><td>${esc(p.date)}</td><td>${esc(p.weekday)}</td>
+      `<tr><td>${fmtDate(p.date)}</td><td>${esc(p.weekday)}</td>
        <td>R${p.allowed_ranks.join(", R")}</td>
        <td>${p.driver ? `<div class="namecell">${avatar(p.driver.avatar_url, "small")}${esc(p.driver.nick_name)}</div>` : "–"}</td></tr>`).join("");
 
