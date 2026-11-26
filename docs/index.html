@@ -50,7 +50,7 @@
   .day-sat { --day: #ff6b35; }   /* Samstag  - Orange */
   .day-sun { --day: #e63946; }   /* Sonntag  - Rot */
   .hint { color: var(--muted); font-size: .9rem; }
-  .tabs { display: flex; gap: 8px; margin-bottom: 12px; }
+  .tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
   .tab {
     background: var(--panel2); color: var(--muted); border: 1px solid var(--line);
     border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: .95rem;
@@ -69,17 +69,16 @@
   }
   .avatar.big { width: 84px; height: 84px; border-color: var(--accent); }
   .avatar.small { width: 32px; height: 32px; }
-  .who { display: flex; align-items: center; gap: 12px; }
   .namecell { display: flex; align-items: center; gap: 10px; }
 
   /* Balkendiagramm */
-  .chart { display: flex; flex-direction: column; gap: 8px; }
-  .bar-row { display: grid; grid-template-columns: 180px 1fr 48px; align-items: center; gap: 12px; }
-  .bar-label { display: flex; align-items: center; gap: 10px; overflow: hidden; white-space: nowrap; }
-  .bar-track { background: var(--panel2); border-radius: 6px; height: 18px; overflow: hidden; }
-  .bar { height: 100%; background: #3b4656; border-radius: 6px; transition: width .4s ease; }
-  .bar-row.first .bar { background: var(--accent); }
+  .chart { display: flex; flex-direction: column; gap: 14px; }
+  .bar-row { display: grid; grid-template-columns: 180px 1fr 60px; align-items: center; gap: 12px; }
+  .bar-label { display: flex; align-items: center; gap: 10px; color: var(--muted); }
   .bar-row.first .bar-label { color: var(--accent); font-weight: 600; }
+  .bar-track { background: var(--panel2); border-radius: 6px; height: 22px; overflow: hidden; }
+  .bar { height: 100%; background: var(--line); border-radius: 6px; transition: width .4s ease; }
+  .bar-row.first .bar { background: var(--accent); }
   .bar-value { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
 </style>
 </head>
@@ -102,26 +101,25 @@
   <div class="tabs">
     <button class="tab active" data-tab="prev">Kutscher-Vorschau</button>
     <button class="tab" data-tab="cand">Statistik</button>
+    <button class="tab" data-tab="chart">Diagramm</button>
   </div>
 
-  <div class="hidden" id="cand">
-    <div class="card">
-      <table>
-        <thead><tr><th>#</th><th>Name</th><th>Rang</th><th class="num">Counter</th><th>Zuletzt gefahren</th></tr></thead>
-        <tbody id="cand-body"></tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <div class="chart" id="cand-chart"></div>
-    </div>
-  </div>
-
-  <div class="card" id="prev">
+  <div class="card hidden" id="prev">
     <table>
       <thead><tr><th>Datum</th><th>Tag</th><th>Ränge</th><th>Kutscher</th></tr></thead>
       <tbody id="prev-body"></tbody>
     </table>
+  </div>
+
+  <div class="card hidden" id="cand">
+    <table>
+      <thead><tr><th>#</th><th>Name</th><th>Rang</th><th class="num">Counter</th><th>Zuletzt gefahren</th></tr></thead>
+      <tbody id="cand-body"></tbody>
+    </table>
+  </div>
+
+  <div class="card hidden" id="chart">
+    <div class="chart" id="cand-chart"></div>
   </div>
 
   <footer id="updated"></footer>
@@ -161,6 +159,12 @@ fetch("data.json?_=" + Date.now())
     document.getElementById("driver-name").textContent = d.driver.nick_name;
     document.getElementById("driver-rank").textContent = d.driver.rank_label;
 
+    // Kutscher-Vorschau
+    document.getElementById("prev-body").innerHTML = d.preview.map(p =>
+      `<tr><td>${fmtDate(p.date)}</td><td>${esc(p.weekday)}</td>
+       <td>R${p.allowed_ranks.join(", R")}</td>
+       <td>${p.driver ? `<div class="namecell">${avatar(p.driver.avatar_url, "small")}${esc(p.driver.nick_name)}</div>` : "–"}</td></tr>`).join("");
+
     // Statistik-Tabelle
     document.getElementById("cand-body").innerHTML = d.candidates.map((m, i) =>
       `<tr class="${i === 0 ? "first" : ""}">
@@ -168,7 +172,7 @@ fetch("data.json?_=" + Date.now())
          <td class="num">${m.counter}</td><td>${fmtDate(m.last_driven)}</td>
        </tr>`).join("");
 
-    // Statistik-Balkendiagramm
+    // Diagramm
     const maxCounter = Math.max(1, ...d.candidates.map(m => m.counter));
     document.getElementById("cand-chart").innerHTML = d.candidates.map((m, i) => {
       const pct = (m.counter / maxCounter) * 100;
@@ -179,12 +183,6 @@ fetch("data.json?_=" + Date.now())
       </div>`;
     }).join("");
 
-    // Kutscher-Vorschau
-    document.getElementById("prev-body").innerHTML = d.preview.map(p =>
-      `<tr><td>${fmtDate(p.date)}</td><td>${esc(p.weekday)}</td>
-       <td>R${p.allowed_ranks.join(", R")}</td>
-       <td>${p.driver ? `<div class="namecell">${avatar(p.driver.avatar_url, "small")}${esc(p.driver.nick_name)}</div>` : "–"}</td></tr>`).join("");
-
     document.getElementById("updated").textContent = "Stand: " + d.updated_at;
   })
   .catch(err => {
@@ -194,8 +192,8 @@ fetch("data.json?_=" + Date.now())
 
 document.querySelectorAll(".tab").forEach(btn => btn.addEventListener("click", () => {
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === btn));
-  document.getElementById("cand").classList.toggle("hidden", btn.dataset.tab !== "cand");
-  document.getElementById("prev").classList.toggle("hidden", btn.dataset.tab !== "prev");
+  ["prev", "cand", "chart"].forEach(id =>
+    document.getElementById(id).classList.toggle("hidden", btn.dataset.tab !== id));
 }));
 </script>
 </body>
