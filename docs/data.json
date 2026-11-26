@@ -1,16 +1,16 @@
 {
   "date": "2026-11-26",
   "weekday": "Donnerstag",
-  "updated_at": "2026-11-26T16:30:10+01:00",
+  "updated_at": "2026-11-26T16:35:48+01:00",
   "allowed_ranks": [
     3
   ],
   "driver": {
-    "uid": "274970272016",
-    "nick_name": "Doctor4Q8PePmv",
+    "uid": "272790552848",
+    "nick_name": "Doctor4NLjmiAH",
     "rank_label": "R3",
-    "power": 14903643,
-    "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png"
+    "power": 19528211,
+    "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
   },
   "candidates": [
     {
