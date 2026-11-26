@@ -71,6 +71,16 @@
   .avatar.small { width: 32px; height: 32px; }
   .who { display: flex; align-items: center; gap: 12px; }
   .namecell { display: flex; align-items: center; gap: 10px; }
+
+  /* Balkendiagramm */
+  .chart { display: flex; flex-direction: column; gap: 8px; }
+  .bar-row { display: grid; grid-template-columns: 180px 1fr 48px; align-items: center; gap: 12px; }
+  .bar-label { display: flex; align-items: center; gap: 10px; overflow: hidden; white-space: nowrap; }
+  .bar-track { background: var(--panel2); border-radius: 6px; height: 18px; overflow: hidden; }
+  .bar { height: 100%; background: #3b4656; border-radius: 6px; transition: width .4s ease; }
+  .bar-row.first .bar { background: var(--accent); }
+  .bar-row.first .bar-label { color: var(--accent); font-weight: 600; }
+  .bar-value { text-align: right; font-variant-numeric: tabular-nums; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -94,11 +104,17 @@
     <button class="tab" data-tab="cand">Statistik</button>
   </div>
 
-  <div class="card hidden" id="cand">
-    <table>
-      <thead><tr><th>#</th><th>Name</th><th>Rang</th><th class="num">Counter</th><th>Zuletzt gefahren</th></tr></thead>
-      <tbody id="cand-body"></tbody>
-    </table>
+  <div class="hidden" id="cand">
+    <div class="card">
+      <table>
+        <thead><tr><th>#</th><th>Name</th><th>Rang</th><th class="num">Counter</th><th>Zuletzt gefahren</th></tr></thead>
+        <tbody id="cand-body"></tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="chart" id="cand-chart"></div>
+    </div>
   </div>
 
   <div class="card" id="prev">
@@ -145,12 +161,25 @@ fetch("data.json?_=" + Date.now())
     document.getElementById("driver-name").textContent = d.driver.nick_name;
     document.getElementById("driver-rank").textContent = d.driver.rank_label;
 
+    // Statistik-Tabelle
     document.getElementById("cand-body").innerHTML = d.candidates.map((m, i) =>
       `<tr class="${i === 0 ? "first" : ""}">
          <td>${i + 1}</td><td><div class="namecell">${avatar(m.avatar_url, "small")}${esc(m.nick_name)}</div></td><td>${esc(m.rank_label)}</td>
          <td class="num">${m.counter}</td><td>${fmtDate(m.last_driven)}</td>
        </tr>`).join("");
 
+    // Statistik-Balkendiagramm
+    const maxCounter = Math.max(1, ...d.candidates.map(m => m.counter));
+    document.getElementById("cand-chart").innerHTML = d.candidates.map((m, i) => {
+      const pct = (m.counter / maxCounter) * 100;
+      return `<div class="bar-row ${i === 0 ? "first" : ""}">
+        <div class="bar-label">${avatar(m.avatar_url, "small")}${esc(m.nick_name)}</div>
+        <div class="bar-track"><div class="bar" style="width:${pct}%"></div></div>
+        <div class="bar-value">${m.counter}</div>
+      </div>`;
+    }).join("");
+
+    // Kutscher-Vorschau
     document.getElementById("prev-body").innerHTML = d.preview.map(p =>
       `<tr><td>${fmtDate(p.date)}</td><td>${esc(p.weekday)}</td>
        <td>R${p.allowed_ranks.join(", R")}</td>
