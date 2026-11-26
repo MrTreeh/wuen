@@ -42,8 +42,22 @@ HIGH_RANK_DAYS = {1, 5}          # Dienstag, Samstag -> R4+R5
 HIGH_RANKS = {4, 5}
 NORMAL_RANKS = {3}               # alle anderen Tage -> R3
 
+WEEKDAYS_DE = {
+    "Monday": "Montag",
+    "Tuesday": "Dienstag",
+    "Wednesday": "Mittwoch",
+    "Thursday": "Donnerstag",
+    "Friday": "Freitag",
+    "Saturday": "Samstag",
+    "Sunday": "Sonntag",
+}
+
 
 # ---------------------------------------------------------------- Helfer
+def weekday_de(day):
+    return WEEKDAYS_DE[day.strftime("%A")]
+
+
 def parse_rank(m):
     """Liest den Rang als Zahl aus rank_label ('R3', 'R4 · Overseer', ...)."""
     label = m.get("rank_label") or m.get("rank") or ""
@@ -187,7 +201,7 @@ def build_preview(state, today, days=PREVIEW_DAYS):
         pool = candidates_for(sim, day)
         entry = {
             "date": day.isoformat(),
-            "weekday": day.strftime("%A"),
+            "weekday": weekday_de(day),
             "allowed_ranks": sorted(allowed_ranks_for(day)),
             "driver": None,
         }
@@ -258,7 +272,7 @@ def main():
 
     data = {
         "date": today_str,
-        "weekday": today.strftime("%A"),
+        "weekday": weekday_de(today),
         "updated_at": now.isoformat(timespec="seconds"),
         "allowed_ranks": sorted(allowed_today),
         "driver": driver_info(top),
