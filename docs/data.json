@@ -1,26 +1,18 @@
 {
-  "date": "2026-11-25",
-  "weekday": "Wednesday",
-  "updated_at": "2026-11-25T16:48:40+01:00",
+  "date": "2026-11-26",
+  "weekday": "Thursday",
+  "updated_at": "2026-11-26T15:57:34+01:00",
   "allowed_ranks": [
     3
   ],
   "driver": {
-    "uid": "274708046096",
-    "nick_name": "Chriss09385",
+    "uid": "272790552848",
+    "nick_name": "Doctor4NLjmiAH",
     "rank_label": "R3",
-    "power": 34576177,
+    "power": 19494293,
     "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
   },
   "candidates": [
-    {
-      "uid": "272790552848",
-      "nick_name": "Doctor4NLjmiAH",
-      "rank_label": "R3",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
-    },
     {
       "uid": "274471469328",
       "nick_name": "Doctor4PB4jsIl",
@@ -110,14 +102,6 @@
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png"
     },
     {
-      "uid": "274845925648",
-      "nick_name": "SkyLightPlayer",
-      "rank_label": "R3",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
-    },
-    {
       "uid": "272920011024",
       "nick_name": "BilboBaggins79",
       "rank_label": "R3",
@@ -132,23 +116,17 @@
       "counter": 1,
       "last_driven": "2026-11-25",
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
+    },
+    {
+      "uid": "272790552848",
+      "nick_name": "Doctor4NLjmiAH",
+      "rank_label": "R3",
+      "counter": 1,
+      "last_driven": "2026-11-26",
+      "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
     }
   ],
   "preview": [
-    {
-      "date": "2026-11-26",
-      "weekday": "Thursday",
-      "allowed_ranks": [
-        3
-      ],
-      "driver": {
-        "uid": "272790552848",
-        "nick_name": "Doctor4NLjmiAH",
-        "rank_label": "R3",
-        "power": 19167337,
-        "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
-      }
-    },
     {
       "date": "2026-11-27",
       "weekday": "Friday",
@@ -159,7 +137,7 @@
         "uid": "274471469328",
         "nick_name": "Doctor4PB4jsIl",
         "rank_label": "R3",
-        "power": 13176871,
+        "power": 13674766,
         "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
       }
     },
@@ -174,7 +152,7 @@
         "uid": "272938926352",
         "nick_name": "AinsleyCain",
         "rank_label": "R4",
-        "power": 37444874,
+        "power": 36699751,
         "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272938926352_1793485228782.jpg"
       }
     },
@@ -202,7 +180,7 @@
         "uid": "376428044560",
         "nick_name": "DoctorLarsNacht",
         "rank_label": "R3",
-        "power": 15207927,
+        "power": 15202137,
         "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
       }
     },
@@ -217,8 +195,22 @@
         "uid": "274966495504",
         "nick_name": "Akamexx",
         "rank_label": "R4",
-        "power": 44120719,
+        "power": 47148290,
         "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png"
+      }
+    },
+    {
+      "date": "2026-12-02",
+      "weekday": "Wednesday",
+      "allowed_ranks": [
+        3
+      ],
+      "driver": {
+        "uid": "272878747920",
+        "nick_name": "DoktorLocke",
+        "rank_label": "R3",
+        "power": 19214685,
+        "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
       }
     }
   ]

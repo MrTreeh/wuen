@@ -4,8 +4,18 @@
     "nick_name": "Alatar",
     "rank": 4,
     "rank_label": "R4 · Overseer",
-    "power": 51017075,
-    "avatar_url": "/static/avatars/head_90001.png",
+    "power": 48572825,
+    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_275013198096_1795639625931.jpg",
+    "counter": 0,
+    "last_driven": null
+  },
+  {
+    "uid": "274966495504",
+    "nick_name": "Akamexx",
+    "rank": 4,
+    "rank_label": "R4",
+    "power": 47148290,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -14,7 +24,7 @@
     "nick_name": "ElPatron220",
     "rank": 3,
     "rank_label": "R3",
-    "power": 46103461,
+    "power": 46602752,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -24,17 +34,7 @@
     "nick_name": "Pestdoctor69",
     "rank": 3,
     "rank_label": "R3",
-    "power": 44408546,
-    "avatar_url": "/static/avatars/head_90002.png",
-    "counter": 0,
-    "last_driven": null
-  },
-  {
-    "uid": "274966495504",
-    "nick_name": "Akamexx",
-    "rank": 4,
-    "rank_label": "R4",
-    "power": 44120719,
+    "power": 45788360,
     "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
@@ -44,7 +44,7 @@
     "nick_name": "AinsleyCain",
     "rank": 4,
     "rank_label": "R4",
-    "power": 37444874,
+    "power": 36699751,
     "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272938926352_1793485228782.jpg",
     "counter": 0,
     "last_driven": null
@@ -54,7 +54,7 @@
     "nick_name": "LordHelmchen2",
     "rank": 3,
     "rank_label": "R3",
-    "power": 36167096,
+    "power": 36516443,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -64,18 +64,18 @@
     "nick_name": "Chriss09385",
     "rank": 3,
     "rank_label": "R3",
-    "power": 34576177,
+    "power": 35159363,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 1,
     "last_driven": "2026-11-25"
   },
   {
-    "uid": "272952475920",
-    "nick_name": "LunnaD",
+    "uid": "273274650896",
+    "nick_name": "MrsLin266",
     "rank": 4,
-    "rank_label": "R4",
-    "power": 33894042,
-    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272952475920_1795545672003.jpg",
+    "rank_label": "R4 · Militarist",
+    "power": 32761682,
+    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_273274650896_1795556717591.jpg",
     "counter": 0,
     "last_driven": null
   },
@@ -84,18 +84,18 @@
     "nick_name": "Raubmöwe",
     "rank": 5,
     "rank_label": "R5",
-    "power": 32592802,
+    "power": 32652742,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
   {
-    "uid": "273274650896",
-    "nick_name": "MrsLin266",
+    "uid": "272952475920",
+    "nick_name": "LunnaD",
     "rank": 4,
-    "rank_label": "R4 · Militarist",
-    "power": 32560159,
-    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_273274650896_1795556717591.jpg",
+    "rank_label": "R4",
+    "power": 32534866,
+    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272952475920_1795545672003.jpg",
     "counter": 0,
     "last_driven": null
   },
@@ -104,7 +104,7 @@
     "nick_name": "JeLo123",
     "rank": 3,
     "rank_label": "R3",
-    "power": 28652654,
+    "power": 30044990,
     "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
@@ -114,7 +114,7 @@
     "nick_name": "Claudine006",
     "rank": 4,
     "rank_label": "R4 · Diplomat",
-    "power": 27656228,
+    "power": 28612867,
     "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
@@ -124,7 +124,17 @@
     "nick_name": "MasteryLuke",
     "rank": 3,
     "rank_label": "R3",
-    "power": 27206840,
+    "power": 27199030,
+    "avatar_url": "/static/avatars/head_90001.png",
+    "counter": 0,
+    "last_driven": null
+  },
+  {
+    "uid": "274428543248",
+    "nick_name": "BenKnobi",
+    "rank": 2,
+    "rank_label": "R2",
+    "power": 25874948,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -134,7 +144,7 @@
     "nick_name": "MDK1978",
     "rank": 1,
     "rank_label": "R1",
-    "power": 22365323,
+    "power": 22362428,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -144,18 +154,18 @@
     "nick_name": "BilboBaggins79",
     "rank": 3,
     "rank_label": "R3",
-    "power": 19448330,
+    "power": 19773425,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 1,
     "last_driven": "2026-11-25"
   },
   {
-    "uid": "272878747920",
-    "nick_name": "DoktorLocke",
+    "uid": "272856547600",
+    "nick_name": "DrVanHelsing7856",
     "rank": 3,
     "rank_label": "R3",
-    "power": 19188085,
-    "avatar_url": "/static/avatars/head_90001.png",
+    "power": 19676225,
+    "avatar_url": "/static/avatars/head_90002.png",
     "counter": 0,
     "last_driven": null
   },
@@ -164,18 +174,18 @@
     "nick_name": "Doctor4NLjmiAH",
     "rank": 3,
     "rank_label": "R3",
-    "power": 19167337,
+    "power": 19494293,
     "avatar_url": "/static/avatars/head_90001.png",
-    "counter": 0,
-    "last_driven": null
+    "counter": 1,
+    "last_driven": "2026-11-26"
   },
   {
-    "uid": "272856547600",
-    "nick_name": "DrVanHelsing7856",
+    "uid": "272878747920",
+    "nick_name": "DoktorLocke",
     "rank": 3,
     "rank_label": "R3",
-    "power": 18865754,
-    "avatar_url": "/static/avatars/head_90002.png",
+    "power": 19214685,
+    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -184,7 +194,7 @@
     "nick_name": "KaffeeLatte",
     "rank": 3,
     "rank_label": "R3",
-    "power": 18407354,
+    "power": 19021196,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -194,7 +204,7 @@
     "nick_name": "Kloras",
     "rank": 1,
     "rank_label": "R1",
-    "power": 16582295,
+    "power": 16574485,
     "avatar_url": "https://phs-image.globallap.com/ASTC6_273365188880_1783719337138.jpg",
     "counter": 0,
     "last_driven": null
@@ -202,9 +212,9 @@
   {
     "uid": "274845925648",
     "nick_name": "SkyLightPlayer",
-    "rank": 3,
-    "rank_label": "R3",
-    "power": 16154067,
+    "rank": 2,
+    "rank_label": "R2",
+    "power": 16150162,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -214,7 +224,7 @@
     "nick_name": "DoctorLarsNacht",
     "rank": 3,
     "rank_label": "R3",
-    "power": 15207927,
+    "power": 15202137,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
@@ -230,22 +240,22 @@
     "last_driven": null
   },
   {
+    "uid": "274471469328",
+    "nick_name": "Doctor4PB4jsIl",
+    "rank": 3,
+    "rank_label": "R3",
+    "power": 13674766,
+    "avatar_url": "/static/avatars/head_90001.png",
+    "counter": 0,
+    "last_driven": null
+  },
+  {
     "uid": "273706606864",
     "nick_name": "KristofSmauel",
     "rank": 1,
     "rank_label": "R1",
     "power": 13455579,
     "avatar_url": "https://phs-image.globallap.com/ASTC6_273706606864_1783892574976.jpg",
-    "counter": 0,
-    "last_driven": null
-  },
-  {
-    "uid": "274471469328",
-    "nick_name": "Doctor4PB4jsIl",
-    "rank": 3,
-    "rank_label": "R3",
-    "power": 13176871,
-    "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
   },
@@ -274,7 +284,27 @@
     "nick_name": "Foffi98",
     "rank": 2,
     "rank_label": "R2",
-    "power": 8618774,
+    "power": 8514950,
+    "avatar_url": "/static/avatars/head_90001.png",
+    "counter": 0,
+    "last_driven": null
+  },
+  {
+    "uid": "481438204176",
+    "nick_name": "Mikiriki",
+    "rank": 2,
+    "rank_label": "R2",
+    "power": 5014077,
+    "avatar_url": "/static/avatars/head_90001.png",
+    "counter": 0,
+    "last_driven": null
+  },
+  {
+    "uid": "273205575952",
+    "nick_name": "Doctor4OdoKLCl",
+    "rank": 1,
+    "rank_label": "R1",
+    "power": 4207485,
     "avatar_url": "/static/avatars/head_90001.png",
     "counter": 0,
     "last_driven": null
