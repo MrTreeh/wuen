@@ -4,12 +4,6 @@ name: Kutscher-Update
 on:
   schedule:
     - cron: "*/10 * * * *"
-  workflow_dispatch:
-    inputs:
-      force:
-        description: "Testmodus: Auswahl auch mehrfach pro Tag ausfuehren"
-        type: boolean
-        default: false
 
 permissions:
   contents: write
