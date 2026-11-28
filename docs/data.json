@@ -1,27 +1,19 @@
 {
-  "date": "2026-11-26",
-  "weekday": "Donnerstag",
-  "updated_at": "2026-11-26T16:35:48+01:00",
+  "date": "2026-11-28",
+  "weekday": "Samstag",
+  "updated_at": "2026-11-28T15:24:42+01:00",
   "allowed_ranks": [
-    3
+    4,
+    5
   ],
   "driver": {
-    "uid": "272790552848",
-    "nick_name": "Doctor4NLjmiAH",
-    "rank_label": "R3",
-    "power": 19528211,
-    "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
+    "uid": "272938926352",
+    "nick_name": "AinsleyCain",
+    "rank_label": "R4",
+    "power": 37986353,
+    "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272938926352_1793485228782.jpg"
   },
   "candidates": [
-    {
-      "uid": "272938926352",
-      "nick_name": "AinsleyCain",
-      "rank_label": "R4",
-      "counter": 0,
-      "last_driven": null,
-      "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272938926352_1793485228782.jpg",
-      "eligible_today": false
-    },
     {
       "uid": "274966495504",
       "nick_name": "Akamexx",
@@ -29,7 +21,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
+      "eligible_today": true
     },
     {
       "uid": "275013198096",
@@ -38,7 +30,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_275013198096_1795639625931.jpg",
-      "eligible_today": false
+      "eligible_today": true
     },
     {
       "uid": "272620060944",
@@ -47,7 +39,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": false
+      "eligible_today": true
     },
     {
       "uid": "376428044560",
@@ -56,7 +48,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "272878747920",
@@ -65,7 +57,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "272856547600",
@@ -74,7 +66,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "274899763472",
@@ -83,7 +75,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "274889400592",
@@ -92,7 +84,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "274880651536",
@@ -101,7 +93,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "273327210768",
@@ -110,7 +102,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "272952475920",
@@ -119,7 +111,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272952475920_1795545672003.jpg",
-      "eligible_today": false
+      "eligible_today": true
     },
     {
       "uid": "273814380816",
@@ -128,7 +120,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "273274650896",
@@ -137,7 +129,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_273274650896_1795556717591.jpg",
-      "eligible_today": false
+      "eligible_today": true
     },
     {
       "uid": "274988687632",
@@ -146,7 +138,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "272784654608",
@@ -155,7 +147,7 @@
       "counter": 0,
       "last_driven": null,
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": false
+      "eligible_today": true
     },
     {
       "uid": "272920011024",
@@ -164,7 +156,7 @@
       "counter": 1,
       "last_driven": "2026-11-25",
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "274708046096",
@@ -173,7 +165,7 @@
       "counter": 1,
       "last_driven": "2026-11-25",
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "272790552848",
@@ -182,7 +174,7 @@
       "counter": 1,
       "last_driven": "2026-11-26",
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "274471469328",
@@ -191,7 +183,7 @@
       "counter": 1,
       "last_driven": "2026-11-26",
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png",
-      "eligible_today": true
+      "eligible_today": false
     },
     {
       "uid": "274970272016",
@@ -200,39 +192,19 @@
       "counter": 1,
       "last_driven": "2026-11-26",
       "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png",
+      "eligible_today": false
+    },
+    {
+      "uid": "272938926352",
+      "nick_name": "AinsleyCain",
+      "rank_label": "R4",
+      "counter": 1,
+      "last_driven": "2026-11-28",
+      "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272938926352_1793485228782.jpg",
       "eligible_today": true
     }
   ],
   "preview": [
-    {
-      "date": "2026-11-27",
-      "weekday": "Freitag",
-      "allowed_ranks": [
-        3
-      ],
-      "driver": {
-        "uid": "376428044560",
-        "nick_name": "DoctorLarsNacht",
-        "rank_label": "R3",
-        "power": 15202137,
-        "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
-      }
-    },
-    {
-      "date": "2026-11-28",
-      "weekday": "Samstag",
-      "allowed_ranks": [
-        4,
-        5
-      ],
-      "driver": {
-        "uid": "272938926352",
-        "nick_name": "AinsleyCain",
-        "rank_label": "R4",
-        "power": 36699751,
-        "avatar_url": "https://phs-image.globallap.com/V1_ASTC6_272938926352_1793485228782.jpg"
-      }
-    },
     {
       "date": "2026-11-29",
       "weekday": "Sonntag",
@@ -240,10 +212,10 @@
         3
       ],
       "driver": {
-        "uid": "272878747920",
-        "nick_name": "DoktorLocke",
+        "uid": "376428044560",
+        "nick_name": "DoctorLarsNacht",
         "rank_label": "R3",
-        "power": 19214685,
+        "power": 16378023,
         "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
       }
     },
@@ -254,11 +226,11 @@
         3
       ],
       "driver": {
-        "uid": "272856547600",
-        "nick_name": "DrVanHelsing7856",
+        "uid": "272878747920",
+        "nick_name": "DoktorLocke",
         "rank_label": "R3",
-        "power": 19676225,
-        "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png"
+        "power": 13024790,
+        "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
       }
     },
     {
@@ -272,7 +244,7 @@
         "uid": "274966495504",
         "nick_name": "Akamexx",
         "rank_label": "R4",
-        "power": 47148290,
+        "power": 49591667,
         "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png"
       }
     },
@@ -283,11 +255,39 @@
         3
       ],
       "driver": {
+        "uid": "272856547600",
+        "nick_name": "DrVanHelsing7856",
+        "rank_label": "R3",
+        "power": 12335644,
+        "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png"
+      }
+    },
+    {
+      "date": "2026-12-03",
+      "weekday": "Donnerstag",
+      "allowed_ranks": [
+        3
+      ],
+      "driver": {
         "uid": "274899763472",
         "nick_name": "ElPatron220",
         "rank_label": "R3",
-        "power": 46641051,
+        "power": 33883724,
         "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90001.png"
+      }
+    },
+    {
+      "date": "2026-12-04",
+      "weekday": "Freitag",
+      "allowed_ranks": [
+        3
+      ],
+      "driver": {
+        "uid": "274889400592",
+        "nick_name": "JeLo123",
+        "rank_label": "R3",
+        "power": 30054266,
+        "avatar_url": "https://api.lastasylumtracker.com/static/avatars/head_90002.png"
       }
     }
   ]
